@@ -16,7 +16,7 @@ const注意事项：
 		age:18
 	}
 
-	const vicer = Ojb.freeze(person) 
+	const vicer = Obj.freeze(person) 
 	vicer.age=20    //修改失败
 	```
 
@@ -24,6 +24,7 @@ const注意事项：
 在ES6开发中,优先使用const, 只有需要改变某一个标识(zhi)符的时候才使用let. 
 
 ### var与let/count的区别
+
 > var拥有自己的function scope
 
 在for循环中使用var定义的i。使用setTimeout时，打印i的值为循环最大值。  
@@ -54,12 +55,13 @@ json标准写法  '{"a":0,"b":"name"}'
 
 * JSON序列化  
 
-	JSON.stringify()	
-	在需求中一般需要发送数据，我们需要把数据序列化，也就是转成标准JSON字符串
-	```JS
-	const json = {a:0,b:'vicer'}
-	console.log(JSON.stringify(json))	//{"a":0,"b":"vicer"}
-	```
+  JSON.stringify()	
+  在需求中一般需要发送数据，我们需要把数据序列化，也就是转成标准JSON字符串
+
+  ```JS
+  const json = {a:0,b:'vicer'}
+  console.log(JSON.stringify(json))	//{"a":0,"b":"vicer"}
+  ```
 
 * JSON反序列化  
 
@@ -215,6 +217,7 @@ test('vicer');
 
 答案1：在外层作用域中，逐层查找，直到有this定义。也就是指向作用域中最近this
 答案2：自己理解：当前代码块中，外层代码块被谁调用就指向谁，没有找到，就继续向外查找
+
 ```javascript
 const obj = {
   a(){

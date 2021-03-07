@@ -21,7 +21,7 @@ axios: ajax i/o system
 ### *  axios的使用
 
 1. 安装axios
-		npm install axios --save
+		`npm install axios --save`
 	
 2. 这里使用第一种请求方式axios(config)	
 

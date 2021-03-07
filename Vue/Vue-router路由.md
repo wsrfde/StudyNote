@@ -255,7 +255,7 @@ if(this.$route.path != this.path){
 
    ```js
    {
-     path:'/user/:id',
+     path:'/user/:id',		//多个属性时  '/user/:id/:name'
    	component: User
    }
    ```
@@ -285,6 +285,8 @@ if(this.$route.path != this.path){
 	    methods:{
 	      clickFun(){
 	      	this.$router.push('/user/'+this.useId)  
+	        //多个属性时  '/user/'+this.useId +'/'+ this.name
+	        //多个属性时不建议用这种方式传递属性
 	      }
 	    }
 	    ```

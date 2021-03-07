@@ -136,10 +136,11 @@ cli3的配置 文件打开方式
 在webpack.config中alias里设置别名，  
 如果是CLI3/4则在vue.config.js中配置   
 
-![别名配置](./img/Cli-Img/alias.png)
+<img src="./img/Cli-Img/alias.png" alt="别名配置"  />
 ps：前面的导入和函数别忘记写
 
 **踩坑记录：**  
+
 * 配置方式1不行试试配置方式2
 
 * 编译失败重启编译器

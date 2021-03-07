@@ -550,3 +550,126 @@ showChild(){
 </script>
 ```
 
+### 递归组件
+
+> 当我们需要重复使用当前组件中的内容时，可以尝试使用递归组件
+
+使用方法：需要给当前需要递归的组件提供一个  name属性，在当前组件内，通过name来调用自己
+
+当我们正常在进行业务的创建时，通常是不断的增加html标签来完成视图展示，而递归组件的存在，可以让我们进行**数据驱动视图**
+
+
+
+**示例：菜单组件递归**
+
+```html
+//app.vue
+
+<template>
+  <div>
+    <test :arr="arr"></test>
+  </div>
+</template>
+
+<script>
+
+  import test from './test'
+
+  export default {
+    name: "App
+    components:{
+      test
+    },
+    data(){
+      return {
+        arr:[
+          {name:'a',children:[
+              {name:'a1'},
+              {name:'a2',children:[
+                  {name:"a2-1"},
+                  {name:"a2-2"},
+                  {name:"a2-3",
+                    },
+                ]},
+              {name:'a3'},
+            ]},
+          {name:'b'},
+          {name:'c'},
+        ]
+      }
+    }
+  }
+</script>
+```
+
+
+
+```html
+// test.vue
+
+<template>
+  <ul>
+    <template v-for="menu in arr">
+      <li v-if="!menu.children">我的名字:{{menu.name}}</li>
+      <test-child v-else :child="menu"></test-child>
+    </template>
+  </ul>
+</template>
+
+<script>
+  import testChild from "./testChild";
+
+  export default {
+    name: "test",
+    props: {
+      arr: {
+        type: Array,
+        default: () => []
+      }
+    },
+    components:{
+      testChild
+    }
+  }
+</script>
+```
+
+```html
+// testChild.vue
+//被递归的组件
+
+<template>
+  <li>
+    <span @click="onShow">我的名字:{{child.name}}</span>
+    <ul v-show="isShow">
+      <template v-for="item in child.children">
+        <li v-if="!item.children">我的孩子:{{item.name}}</li>
+        <test-child v-else :child="item"></test-child>
+      </template>
+    </ul>
+  </li>
+</template>
+
+<script>
+  export default {
+    name: "testChild",
+    props:{
+      child:{
+        type:Object,
+        default:()=> ({})
+      }
+    },
+    data(){
+      return {
+        isShow:false
+      }
+    },
+    methods:{
+      onShow(){
+        this.isShow = !this.isShow;
+      }
+    }
+  }
+</script>
+```
+

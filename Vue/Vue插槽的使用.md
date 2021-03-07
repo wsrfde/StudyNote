@@ -36,11 +36,18 @@
 > 当有多个插槽时，我们只想替换其中一个，就需要用到具名插槽了 
 
 ```html
-	<cpn>
-		<span slot='mysolt'>我替换了myslot</span>
-	</cpn>
-	<slot name='myslot'>myslot</slot>
-	<slot name='newslot'>newslot</slot>
+// cpn.vue
+<slot name='myslot'>myslot</slot>
+<slot name='newslot'>newslot</slot>	
+
+//app.vue
+<cpn>
+  替换方式一：<span slot='mysolt'>我替换了myslot</span>
+  替换方式二：
+  <template v-slot:newslot>
+    <span>我替换了newslot</span>
+  </template>
+</cpn>
 ```
 <br>
 
@@ -138,3 +145,4 @@
   </div>
 </template>
 ```
+

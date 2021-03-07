@@ -869,3 +869,106 @@ inject: {
 }
 ```
 
+
+
+### 函数组件之jsx-render的使用
+
+> 在组件的使用中，除了使用`.vue`文件，我们也可以使用render函数的形式来进行渲染`html`
+
+#### render函数组件的用法
+
+```vue
+//app.vue
+<template>
+  <div class="app">
+    <renderCom tagNum="1">我是h1</renderCom>
+    <renderCom tagNum="2">我是h2</renderCom>
+    <renderCom tagNum="3">我是h3</renderCom>
+  </div>
+</template>
+
+<script>
+  import renderCom from "./renderCom";
+
+  export default {
+    name: "app",
+    components:{
+      renderCom
+    }
+  }
+</script>
+```
+
+```js
+//renderCom.js
+export default {
+  props: {
+    tagNum: {
+      type: String
+    }
+  },
+  //<h1>我是h1</h1>
+  //<h2>我是h2</h2>
+  //<h3>我是h3</h3>
+  render(h) {
+    let count  = 'test'+this.tagNum;
+    //h('标签名',属性,内容)
+    //更多render函数属性  https://cn.vuejs.org/v2/guide/render-function.html
+    return h('h'+this.tagNum,{
+      attrs: {
+        name: count,
+        id: '#' + count
+      },
+    },this.$slots.default)
+  }
+}
+```
+
+#### jsx的用法
+
+> 当我们只想简单渲染几个标签时，使用render函数过面太过于复杂，我们可以使用`jsx`来进行渲染`html`
+
+使用方法：
+
+* <> 	代表html
+* {}      代表js
+
+
+
+```js
+//renderCom.js
+export default {
+  props: {
+    tagNum: {
+      type: String
+    }
+  },
+  methods:{
+    getAttr(e){
+      console.log(e.target.getAttribute('name'))
+    }
+  },
+  render(h) {
+    // let count  = 'test'+this.tagNum;
+    // return h('h'+this.tagNum,{
+    //   attrs: {
+    //     name: count,
+    //     id: '#' + count
+    //   },
+    // },this.$slots.default)
+    // return h('h'+this.name,{},this.$slots.default)
+    
+    let tag = 'h' + this.tagNum;
+    //  <> 代表html   {} 代表js
+    // name='1' 传递字符串属性  name={1}  传递Number属性
+    return <tag name={this.tagNum} onclick={this.getAttr}> 															{this.$slots.default} 
+    			 </tag>
+  }
+}
+
+```
+
+[更多关于jsx的属性用法](https://github.com/vuejs/jsx#installation)
+
+
+

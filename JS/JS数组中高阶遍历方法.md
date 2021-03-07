@@ -58,7 +58,7 @@ forEach和map的区别是没有返回值
 **建议直接用设置初始值的方法  **
 
  	1. 因为reduce方法面对空数组时需要一个初始值，  
-	2. 如果数组内是对象，在没有初始值方法中，第一次遍历previousValue是一个成员需要计算
+ 	2. 如果数组内是对象，在没有初始值方法中，第一次遍历previousValue是一个成员需要计算
 
 
 
@@ -117,7 +117,7 @@ console.log(newArr);
 内如果判断为true，则返回item。
 ```js
 	  const arr = [1,2,3,4]
-      let arrItem =  arr.find(function(n){
+    let arrItem =  arr.find(function(n){
 		  return n==2;
 	  });
 	  console.log(arrItem);

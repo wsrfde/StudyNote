@@ -35,7 +35,7 @@
 
 1. 在查看webpack配置中找到image的loader规则
 
-   <img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Vue\img\cli4\image的loader原配置.png" style="zoom: 80%;" />
+   ![](./img/cli4\image的loader原配置.png)
 
    可以看到，image的默认使用`url-loader`,当小于`limit`使用base64编码，大于`limit`时使用`file-loader`配置，这些配置在cli4中已经默认帮我们配置好
 
@@ -175,7 +175,7 @@ module.exports = {
 
 ##### 删除插件
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Vue\img\cli4\删除插件.png" style="zoom:80%;" />
+<img src=".\img\cli4\删除插件.png" style="zoom:80%;" />
 
 ```js
 config.plugins.delete('define');
@@ -189,6 +189,12 @@ config.plugins.delete('define');
 //可链式调用
 config.output.set('path','testFile');
 ```
+
+#### 更多chainWebpack调用方法
+
+> 如果以上方法无法满足你的使用需求，可以查看中文文档
+
+[中文文档](https://github.com/Yatoo2018/webpack-chain/tree/zh-cmn-Hans)
 
 #### configureWebpack的用法
 
@@ -228,12 +234,6 @@ module.exports = {
 ```
 
 
-
-#### 更多chainWebpack调用方法
-
-> 如果以上方法无法满足你的使用需求，可以查看中文文档
-
-[中文文档](https://github.com/Yatoo2018/webpack-chain/tree/zh-cmn-Hans)
 
 #### webpack源文件地址
 
@@ -284,7 +284,7 @@ plugins: [
 
 才能在全局中console出`process.env.NODE_ENV`的开发环境。
 
-**现在无需配置以上代码，即可进行打印**
+**现在cli4中无需配置以上代码，即可进行打印**
 
 如果我们想切换当前环境，可以在`package.json`中，更改当前的运行命令
 
@@ -366,7 +366,7 @@ module.exports = {
 }
 ```
 
-### polyfill的useBuiltIns选项
+#### polyfill的useBuiltIns选项
 
 > 在cli4中，useBuiltIns的默认配置就是usage
 
@@ -391,6 +391,14 @@ npm install -g serve
 # 这个模式会处理即将提到的路由问题
 serve -s dist
 ```
+
+注：如果你非要本地打开，也可以进行如下设置
+
+1. 设置  publicPath:'./'   
+
+2. 路由不能为history 模式
+
+
 
 #### 项目打包踩坑
 

@@ -35,7 +35,7 @@
 5. 变量的延迟加载
 
    ```less
-   @var-color:;
+   @var-color:#ccc;
    .box{
      color:@var-color;		//#ccc
      .inner{
