@@ -315,8 +315,8 @@ watch:{
       console.log(newVal);
     },
       immediate:true,   //即时：第一次定义data时也被监控
-        deep:true,    //深层：监控data中对象中的参数
-          lazy:true     //懒惰：compouted的实现
+      deep:true,    //深层：监控data中对象中的参数
+      lazy:true     //懒惰：compouted的实现
   }
 }
 ```

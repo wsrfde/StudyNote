@@ -146,8 +146,24 @@ axios: ajax i/o system
 	  console.log(rel)
 	})
 	```
-	
-3. 当有多个接口配置多个实例即可
+
+**当有多个接口时怎么办？**
+
+* 给多个接口配置多个实例即可
+
+* 或者在实例中使用`baseURL`，它会自动覆盖掉创建实例时写的参数
+
+  ```js
+  instance1({
+    baseURL:'http://api-xxx.com'
+    url:'路径2',
+    params:{}
+  }).then(rel =>{
+    console.log(rel)
+  })
+  ```
+
+  
 
 ### *  axios封装
 

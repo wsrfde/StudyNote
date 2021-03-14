@@ -146,16 +146,38 @@ module.exports = {
 
 ##### 添加插件配置
 
+方法 一：
+
 ```js
 // vue.config.js
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
 module.exports = {
   configureWebpack: {
     plugins: [
-      new MyAwesomeWebpackPlugin()
+      new BundleAnalyzerPlugin()
     ]
   }
 }
 ```
+
+方法二：
+
+```js
+// vue.config.js
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
+module.exports = {
+  chainWebpack: config => {
+    config
+      .plugin('BundleAnalyzerPlugin')
+      .use(BundleAnalyzerPlugin)
+      .end()
+  }
+}
+```
+
+
 
 ##### 修改插件配置
 
@@ -374,6 +396,39 @@ module.exports = {
 
 * `useBuiltIns：‘entry’`     自行在需要导入的地方导入
 * `useBuiltIns：false`         不使用polyfill
+
+### webpack模块可视化
+
+> 很新颖的一个东西，可以概览项目中用的模块占用内存大小，先上图片
+
+<img src=".\img\cli4\模块视图分析.png" style="zoom: 50%;" />
+
+那么就让我们来看下模块可视化工具（装B神器）的用法
+
+1. 安装webpack-bundle-analyzer
+
+   `npm i webpack-bundle-analyzer -D`
+
+2. 在vue.config.js中配置webpack-bundle-analyzer
+
+   ```js
+   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+   
+   //如果你看过我上面的文章，应该知道怎么在vue.config.js中怎么添加插件，好吧直接给出代码
+   configureWebpack: {
+     plugins: [
+       new BundleAnalyzerPlugin()
+     ]
+   }
+   ```
+
+3. 配置package.json
+
+   `"build:analyze": "vue-cli-service build --report",`
+
+4. 运行
+
+   `npm run build:analyze`
 
 
 
