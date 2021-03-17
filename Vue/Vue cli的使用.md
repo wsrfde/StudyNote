@@ -131,13 +131,47 @@ cli3的配置 文件打开方式
 
 在开发中我们需要引用文件时需要一层层查找，非常浪费时间，我们可以通过配置别名的方式，直接引用某个目录。如之前使用../../pages/index  配置别名后直接使用pages/index即可
 
-注意：配置成功后，如使用src导入前面加波浪符号~。如~img/1.jpg
+
 
 在webpack.config中alias里设置别名，  
 如果是CLI3/4则在vue.config.js中配置   
 
-<img src="./img/Cli-Img/alias.png" alt="别名配置"  />
-ps：前面的导入和函数别忘记写
+```js
+const path = require('path')
+function resolve(dir){
+  return path.join(__dirname,dir)
+}
+
+module.exports ={
+  //配置方式一：
+    
+  // resolve : {
+  //   alias : {
+  //     'views': '@/views',
+  //     'components': '@/components',
+  //     'network': '@/network',
+  //     'common': '@/common',
+  //     'assets': '@/assets',
+  //   }
+  // },
+    
+  //配置方式二：  ps：前面的导入path和函数resolve别忘记写
+  chainWebpack: (config) =>{
+    config.resolve.alias
+        .set('views',resolve('src/views'))
+        .set('components',resolve('src/components'))
+        .set('network',resolve('src/network'))
+        .set('common',resolve('src/common'))
+        .set('assets',resolve('src/assets'))
+  }
+}
+```
+
+**注意：配置成功后，如使用src导入前面图片或资源，需加波浪符号~**。
+
+如`src/img/a.jpg` 需写成`~img/a.jpg`
+
+
 
 **踩坑记录：**  
 
