@@ -314,6 +314,18 @@ $var-color:#ccc;
 }
 ```
 
+#### 样式穿透
+
+当我们在组件中使用了`<style lang="scss" scoped></style>`属性，但还想要改变ui框架组件的样式，可以使用如下方法
+
+* `.box >>> .inner{ /*...*/ }`
+* `.box /deep/ .inner{ /*...*/ }`
+* `::v-deep .inner{ /*...*/ }`
+
+
+
+
+
 #### 嵌套规则
 
 > 除了属性嵌套，其他与less一致
