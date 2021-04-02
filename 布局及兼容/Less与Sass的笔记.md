@@ -324,6 +324,10 @@ $var-color:#ccc;
 
 
 
+不管你是否使用`dart-sass`，我都是建议你使用`::v-deep`的写法，它不仅兼容了 css 的`>>>`写法，还兼容了 sass `/deep/`的写法。而且它还是 [vue 3.0 RFC](https://github.com/vuejs/rfcs/blob/scoped-styles-changes/active-rfcs/0023-scoped-styles-changes.md) 中指定的写法。
+
+而且原本 `/deep/` 的写法也本身就被 Chrome 所废弃，你现在经常能在控制台中发现 Chrome 提示你不要使用`/deep/`的警告。
+
 
 
 #### 嵌套规则
