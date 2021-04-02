@@ -38,11 +38,15 @@
 
 * 因为computed实质上是一个属性，所以调用computed的时候不用写括号()来调用  
 
-	  //只需写函数即可
+	  ```js
+	//只需写函数即可
 	  computed:{
 		fullName:function () {
 	      return this.firstName+ ' '+this.lastName;
 	    }
 	  }
+	```
+	
+	
 	
 	
