@@ -456,16 +456,43 @@ Vue使用单一状态树,那么也意味着很多状态都会交给Vuex来管理
 	
 	```js
 	  getters:{
-		fullName(state){
-		  return state.name + 111
-		},
-		fullName1(state,getters,rootState){
-		  return  state.name + rootState.counter
-		}
+	    fullName(state){
+	      return state.name + 111
+	    },
+	    fullName1(state,getters,rootState){
+	      return  state.name + rootState.counter
+	    }
 	  }
 	```
 	
-	
+#### 命名空间
+
+在大型项目中会有多个模块，当多个模块时可能会出现命名冲突的问题，这时我们就可以使用命名空间来解决这个问题
+
+**配置方法：**
+
+```js
+// moduleA.js
+cosnt store = {
+  //...
+}
+const mutations = {
+  setModuleA(){
+    //...
+  }
+}
+//在导出模块的时候配置参数namespaced
+export default { namespaced:true, store , mutations}
+```
+
+**使用方法：**
+
+```js
+this.$store.commit('moduleA/setModuleA')   
+```
+
+
+
 ### 项目结构
 
 在store中，
