@@ -58,3 +58,11 @@ mock分为`js版mock`和`nodejs版mock`
 
 
 
+### 各个版本区别
+
+| 分支名                                                       | 是否精简 commit | 是否精简功能 | 是否支持 i18n | 更新时间 |                            维护人                            |
+| ------------------------------------------------------------ | :-------------: | :----------: | :-----------: | :------: | :----------------------------------------------------------: |
+| [master](https://github.com/vue-admin-beautiful/admin-pro/)  |        ❌        |      ❌       |       ✔       |   即时   | <a href="https://github.com/chuzhixin" target="_blank"><img style="border-radius:999px" src="https://avatars3.githubusercontent.com/u/26647258?s=50&u=753921fb23f418996dffd6196e89729fcb2329ed&v=4"/></a> |
+| [release/main](https://github.com/vue-admin-beautiful/admin-pro/tree/release/main) |        ✔        |      ❌       |       ✔       | 10-30 天 | <a href="https://github.com/fwfmiao" target="_blank"><img style="border-radius:999px" src="https://avatars3.githubusercontent.com/u/29328241?s=50&u=bb0977b405ccf1a101ce4e18e4fb8d958854ca60&v=4"/></a> |
+| [release/template](https://github.com/vue-admin-beautiful/admin-pro/tree/release/template) |        ✔        |      ✔       |       ✔       | 10-30 天 | <a href="https://github.com/fwfmiao" target="_blank"><img style="border-radius:999px" src="https://avatars3.githubusercontent.com/u/29328241?s=50&u=bb0977b405ccf1a101ce4e18e4fb8d958854ca60&v=4"/></a> |
+| [release/seed](https://github.com/vue-admin-beautiful/admin-pro/tree/release/seed) |        ✔        |      ✔       |       ❌       | 10-30 天 | <a href="https://github.com/fwfmiao" target="_blank"><img style="border-radius:999px" src="https://avatars3.githubusercontent.com/u/29328241?s=50&u=bb0977b405ccf1a101ce4e18e4fb8d958854ca60&v=4"/></a> |
