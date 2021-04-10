@@ -961,8 +961,7 @@ export default {
     let tag = 'h' + this.tagNum;
     //  <> 代表html   {} 代表js
     // name='1' 传递字符串属性  name={1}  传递Number属性
-    return <tag name={this.tagNum} onclick={this.getAttr}> 															{this.$slots.default} 
-    			 </tag>
+    return <tag name={this.tagNum} onclick={this.getAttr}> {this.$slots.default} </tag>
   }
 }
 
