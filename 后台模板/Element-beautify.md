@@ -66,3 +66,15 @@ mock分为`js版mock`和`nodejs版mock`
 | [release/main](https://github.com/vue-admin-beautiful/admin-pro/tree/release/main) |        ✔        |      ❌       |       ✔       | 10-30 天 | <a href="https://github.com/fwfmiao" target="_blank"><img style="border-radius:999px" src="https://avatars3.githubusercontent.com/u/29328241?s=50&u=bb0977b405ccf1a101ce4e18e4fb8d958854ca60&v=4"/></a> |
 | [release/template](https://github.com/vue-admin-beautiful/admin-pro/tree/release/template) |        ✔        |      ✔       |       ✔       | 10-30 天 | <a href="https://github.com/fwfmiao" target="_blank"><img style="border-radius:999px" src="https://avatars3.githubusercontent.com/u/29328241?s=50&u=bb0977b405ccf1a101ce4e18e4fb8d958854ca60&v=4"/></a> |
 | [release/seed](https://github.com/vue-admin-beautiful/admin-pro/tree/release/seed) |        ✔        |      ✔       |       ❌       | 10-30 天 | <a href="https://github.com/fwfmiao" target="_blank"><img style="border-radius:999px" src="https://avatars3.githubusercontent.com/u/29328241?s=50&u=bb0977b405ccf1a101ce4e18e4fb8d958854ca60&v=4"/></a> |
+
+
+
+### 背景虚化毛玻璃特效取消
+
+全局搜索`vab.scss`文件，注释掉 **遮罩** 效果中的`backdrop-filter`属性
+
+
+
+### 使用Vab-icon设置本地svg大小
+
+要把`width`和`height`大小与`font-size`设置一致，才能调整大小
