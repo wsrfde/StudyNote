@@ -25,25 +25,25 @@
 
 鼠标选中多个储存格，然后点击如下按钮，即可让标题自动居中并合并单元格
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\标题居中.png" alt="1596976105(1)" style="zoom: 80%;" />
+<img src=".\img\标题居中.png" alt="1596976105(1)" style="zoom: 80%;" />
 
 #### 单元格样式
 
 鼠标选中多个储存格，选择单元格样式，对应调整即可
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\单元格样式.png" alt="1596976598(1)" style="zoom:67%;" />
+<img src=".\img\单元格样式.png" alt="1596976598(1)" style="zoom:67%;" />
 
 #### 单元格相同宽度
 
 **小技巧：**在`ABC框上`拖动鼠标，选择要统一的宽度栏，鼠标在任意一个`栏位中间拖动宽度`，其他宽度自动改变(列高的操作同上)
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\调整统一宽.gif" alt="调整统一宽" style="zoom:50%;" />
+<img src=".\img\调整统一宽.gif" alt="调整统一宽" style="zoom:50%;" />
 
 #### 自动填充编号
 
 如我们输入编号的时候后排序是数字从小到大或偶数顺序的排序，只需把选中需要判断的表格，然后`鼠标移动到储存格的右下角`，向下方拖动即可自动输入
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\自动填充编号.gif" alt="自动填充编号" style="zoom:67%;" />
+<img src=".\img\自动填充编号.gif" alt="自动填充编号" style="zoom:67%;" />
 
 #### 日期格式
 
@@ -51,7 +51,7 @@
 
 如 `2020/1/1`。当我们需要更改格式时，可以点击右键，选择Excel填充好的相应格式
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\日期格式.jpg" alt="日期格式" style="zoom:50%;" /><img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\日期格式1.png" alt="日期格式1" style="zoom:55%;" />    
+<img src=".\img\日期格式.jpg" alt="日期格式" style="zoom:50%;" /><img src=".\img\日期格式1.png" alt="日期格式1" style="zoom:55%;" />    
 
 
 
@@ -100,11 +100,11 @@
 
 这个很简单，选择需要更改的格式，点击如图片位置，更改格式即可。
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\统一格式.gif" alt="统一格式" style="zoom:67%;" />
+<img src=".\img\统一格式.gif" alt="统一格式" style="zoom:67%;" />
 
 如果需要复制当前格式，还可以使用`格式刷`功能，一键把当前格式复制到其他列中
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\统一格式1.gif" alt="统一格式1" style="zoom:67%;" />
+<img src=".\img\统一格式1.gif" alt="统一格式1" style="zoom:67%;" />
 
 
 
@@ -122,7 +122,7 @@
 
 但这样的缺点也很明显，线条不能定制，外部是实线，内部是虚线
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\打印线演示.png" alt="打印线演示" style="zoom:67%;" />
+<img src=".\img\打印线演示.png" alt="打印线演示" style="zoom:67%;" />
 
 **方式二：**
 
@@ -133,7 +133,7 @@
 1. 选择`线条颜色`和`线形`，则发现鼠标变成画笔形状，即可沿线描边，进行绘制
 2. 如果一条条绘制麻烦，还可以选择`绘制边框`，即可多边框绘制
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\边框绘制.gif" alt="边框绘制" style="zoom:67%;" />
+<img src=".\img\边框绘制.gif" alt="边框绘制" style="zoom:67%;" />
 
 **擦除线条：**
 
@@ -151,7 +151,7 @@
 
 优化：我们可以`Excel侧栏点击右键`，然后选择`插入`，即可插入多的行或列，来让表格不那么拥挤
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\图片填充.gif" alt="图片填充" style="zoom:50%;" />
+<img src=".\img\图片填充.gif" alt="图片填充" style="zoom:50%;" />
 
 **隐藏表格线：**
 
@@ -173,7 +173,7 @@
 
 **小技巧：**可以按快捷键`Alt+=`自动进行求和运算
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\函数求和.gif" alt="函数求和" style="zoom: 50%;" />
+<img src=".\img\函数求和.gif" alt="函数求和" style="zoom: 50%;" />
 
 
 
@@ -189,7 +189,7 @@
 2. 在`视图`中找到`冻结窗格`，点击`冻结窗格即可`
 3. 取消操作同上
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\冻结窗格.gif" alt="冻结窗格" style="zoom: 50%;" />
+<img src=".\img\冻结窗格.gif" alt="冻结窗格" style="zoom: 50%;" />
 
 #### 拆分视窗
 
@@ -232,9 +232,9 @@
 
 只需要在添加筛选条件时，**类别作为第一个筛选条件**，**数量作为第二个筛选条件**即可
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\自定义排序.png" alt="自定义排序" style="zoom:67%;" />
+<img src=".\img\自定义排序.png" alt="自定义排序" style="zoom:67%;" />
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\自定义排序示例.png" alt="自定义排序示例" style="zoom: 80%;" />
+<img src=".\img\自定义排序示例.png" alt="自定义排序示例" style="zoom: 80%;" />
 
 
 
@@ -242,7 +242,7 @@
 
 当我们想让序列不按照大小，也不按照笔画，想让按照我们要求的顺序进行排序时，可以使用`自定义序列`
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\自定义序列.gif" alt="自定义序列" style="zoom: 80%;" />
+<img src=".\img\自定义序列.gif" alt="自定义序列" style="zoom: 80%;" />
 
 
 
@@ -293,11 +293,11 @@
 
 **注意：**如果发现只填充表格线没有填充内容的话，请在`开始`中填充背景色为`无填充`
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\格式化表格.png" alt="格式化表格" style="zoom:50%;" />
+<img src=".\img\格式化表格.png" alt="格式化表格" style="zoom:50%;" />
 
 4. 确定后，上方选项卡便出现了`设计`选项卡
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\设计栏.png" alt="设计栏" style="zoom:50%;" />
+<img src=".\img\设计栏.png" alt="设计栏" style="zoom:50%;" />
 
 4. 如果我们不喜欢条纹格，可以取消勾选`镶边行`或者`镶边列`
 
@@ -307,7 +307,7 @@
 
 找到`颜色`选项进行更改配色
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\更改配色.png" alt="更改配色" style="zoom:67%;" />
+<img src=".\img\更改配色.png" alt="更改配色" style="zoom:67%;" />
 
 #### 新增表格中行
 
@@ -339,7 +339,7 @@
 3. 然后回到`设计`选项卡，点击`转换为区域`。
 4. 会询问**是否转换为普通区域**，点击**是**即可
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\还原表格样式.gif" alt="还原表格样式" style="zoom:67%;" />
+<img src=".\img\还原表格样式.gif" alt="还原表格样式" style="zoom:67%;" />
 
 
 
@@ -353,7 +353,7 @@
 2. 选择`突出显示单元格规则`，条件根据自己需要选择，这里我们先选择`等于`
 3. 筛选条件我**可以手动输入**，**也可以直接鼠标点击**对应的单元格，**再选择配色即可**
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\设定表格样式条件.gif" alt="设定表格样式条件" style="zoom:67%;" />
+<img src=".\img\设定表格样式条件.gif" alt="设定表格样式条件" style="zoom:67%;" />
 
 
 
@@ -366,7 +366,7 @@
 3. 把条件删除掉**重新点选**，**也可以自己输入条件**，如第C行第3列，输入`=$C$3`即可
 4. 字体背景等可以在`格式`中配置
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\管理规则.gif" alt="管理规则" style="zoom: 50%;" />
+<img src=".\img\管理规则.gif" alt="管理规则" style="zoom: 50%;" />
 
 
 
@@ -391,7 +391,7 @@
 
 数据条规则可以根据数值的大小来设定柱状图
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\数据条.png" alt="数据条" style="zoom:50%;" />
+<img src=".\img\数据条.png" alt="数据条" style="zoom:50%;" />
 
 1. **选中当前列**，然后再`开始`中点击`条件格式`
 2. 选择`数据条`，然后自行选择样式即可
@@ -404,7 +404,7 @@
 
 红色值最低<绿色值最大。一直按照色阶（彩虹）的方式排序
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\色阶.png" alt="色阶" style="zoom:50%;" />
+<img src=".\img\色阶.png" alt="色阶" style="zoom:50%;" />
 
 1. **选中当前列**，然后再`开始`中点击`条件格式`
 2. 选择`色阶`，然后自行选择样式即可
@@ -417,14 +417,14 @@
 
 根据值得大小来进行设定相应图标
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\图标集.png" alt="图标集" style="zoom: 67%;" />
+<img src=".\img\图标集.png" alt="图标集" style="zoom: 67%;" />
 
 1. **选中当前列**，然后再`开始`中点击`条件格式`
 2. 选择`图标集`，然后自行选择样式即可
 
 编辑图标集规则同上，点击`管理规则`，点击`编辑规则`即可进行数值设定，来展示对应图标
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\编辑图标集.png" alt="编辑图标集" style="zoom:67%;" />
+<img src=".\img\编辑图标集.png" alt="编辑图标集" style="zoom:67%;" />
 
 #### 清除规则
 
@@ -439,7 +439,7 @@
 
 当我们正常工作中，有时不会只打开一个表格，有可能是多张表格，但都是一个项目时，就可以用到工作表。位置如下图
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\工作表.png" alt="工作表" style="zoom:50%;" />
+<img src=".\img\工作表.png" alt="工作表" style="zoom:50%;" />
 
 #### 重命名工作表
 
@@ -453,7 +453,7 @@
 
 按住`Ctrl`键，鼠标单击要复制的工作表，向右拖动即可
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\复制工作表.gif" alt="复制工作表" style="zoom:50%;" />
+<img src=".\img\复制工作表.gif" alt="复制工作表" style="zoom:50%;" />
 
 #### 复制工作表到其他文件
 
@@ -464,7 +464,7 @@
 3. 勾选`建立副本`，点击确定即可
 4. 则会发现在新的Excel文件中新增了一个复制过去的工作表
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\复制工作表1.gif" alt="复制工作表1" style="zoom: 50%;" />
+<img src=".\img\复制工作表1.gif" alt="复制工作表1" style="zoom: 50%;" />
 
 #### 删除工作表
 
@@ -501,7 +501,7 @@
 
 想要**退出对比**的话，在`数据`选项卡中点击取消组合即可
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\数据表汇算.gif" alt="数据表汇算" style="zoom:67%;" />
+<img src=".\img\数据表汇算.gif" alt="数据表汇算" style="zoom:67%;" />
 
 
 
@@ -514,7 +514,7 @@
 1. 选中所有表格
 2. 在`插入`选项卡中，点击对应的图表图标，即可插入一个图表
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\插入图表.gif" alt="插入图表" style="zoom:50%;" />
+<img src=".\img\插入图表.gif" alt="插入图表" style="zoom:50%;" />
 
 #### 移动图表
 
@@ -540,7 +540,7 @@
 
 **注意：**这里有个坑就是在添加**纵坐标轴标题**时，文字方向不对，应该双击文字进行调整
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\字体修正.gif" alt="字体修正" style="zoom:67%;" />
+<img src=".\img\字体修正.gif" alt="字体修正" style="zoom:67%;" />
 
 
 
@@ -548,7 +548,7 @@
 
 当我们新增表格内容后，想要图表也进行新增，可以进行如下操作
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\新增图表.gif" alt="新增图表" style="zoom:67%;" />
+<img src=".\img\新增图表.gif" alt="新增图表" style="zoom:67%;" />
 
 #### 更改图表类型
 
@@ -562,7 +562,7 @@
 1. 点击图表的筛选按钮，如图片所示
 2. 选择好条件后点击`应用`即可
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\图表筛选.png" alt="图表筛选" style="zoom:50%;" />
+<img src=".\img\图表筛选.png" alt="图表筛选" style="zoom:50%;" />
 
 #### 切换图表依据
 
@@ -582,7 +582,7 @@
 2. 在右边的弹窗中，点击柱状图图标，进行坐标轴调整（可看如下动态示例图）
 3. 输入好数值后按`Enter`，进行图表预览
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\刻度线调整.gif" alt="刻度线调整" style="zoom:50%;" />
+<img src=".\img\刻度线调整.gif" alt="刻度线调整" style="zoom:50%;" />
 
 
 
@@ -596,7 +596,7 @@
 
 **注意：**如果图片失真，可以尝试切换图片展示类型，默认是`伸展`，还可以切换`层叠/层叠并缩放`
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\柱状图图片填充.gif" alt="柱状图图片填充" style="zoom:67%;" />
+<img src=".\img\柱状图图片填充.gif" alt="柱状图图片填充" style="zoom:67%;" />
 
 #### 饼状图对比
 
@@ -614,7 +614,7 @@
 1. 我们还可以把饼状图的一个小块抽离出来，**双击饼状图**，再次**单击饼状图块**，即选中了对应图块
 2. **鼠标向外拖动**，即可让饼状图某块单独抽离出来，让数据更加明显
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\饼状图标注.gif" alt="饼状图标注" style="zoom:67%;" />
+<img src=".\img\饼状图标注.gif" alt="饼状图标注" style="zoom:67%;" />
 
 
 
@@ -627,7 +627,7 @@
 
 3. 插入的图表没有文字显示，我们可以在图表的➕按钮，勾选`数据标签`，即可在每个折现处展示当前折点数值
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\插入折线图.gif" alt="插入折线图" style="zoom:67%;" />
+<img src=".\img\插入折线图.gif" alt="插入折线图" style="zoom:67%;" />
 
 #### 迷你走势图
 
@@ -638,19 +638,19 @@
 
 **注意**：如果想**清除迷你图**，请在`设计`选项中，找到`清除`按钮，才可清除，一般的delete按钮并没有作用
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\迷你曲线图.gif" alt="迷你曲线图" style="zoom:67%;" />
+<img src=".\img\迷你曲线图.gif" alt="迷你曲线图" style="zoom:67%;" />
 
 #### 雷达图
 
 一般常用于游戏的对比，也可以进行成绩对比
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\雷达图.gif" alt="雷达图" style="zoom:50%;" />
+<img src=".\img\雷达图.gif" alt="雷达图" style="zoom:50%;" />
 
 #### 组合图
 
 在一组数据我们想要展示价格和数量的走势时，普通的柱状图并无法进行展示，这时我们就用到了组合图
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\组合图.gif" alt="组合图" style="zoom:50%;" />
+<img src=".\img\组合图.gif" alt="组合图" style="zoom:50%;" />
 
 
 
@@ -666,7 +666,7 @@
 
 重要的事情说三遍，我们再接着回来看筛选框的内容
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\数据透视表.png" alt="数据透视表" style="zoom:50%;" />
+<img src=".\img\数据透视表.png" alt="数据透视表" style="zoom:50%;" />
 
 #### 排序和筛选
 
@@ -686,7 +686,7 @@
 
 在`值字段设置`中，找到`值的显示方式`，选择`总计的百分比`，点击确定即可看到数值以总计的百分比显示
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\数据透视表总计百分比.gif" alt="数据透视表总计百分比" style="zoom:50%;" />
+<img src=".\img\数据透视表总计百分比.gif" alt="数据透视表总计百分比" style="zoom:50%;" />
 
 #### 移除字段
 
@@ -700,7 +700,7 @@
 
 如，我点击了一个总计金额的单元格，行的表头对应着商品名，列的表头对应业务员，双击之后便会出现对应商品名和业务员姓名的所有数据
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\对比小技巧.gif" alt="对比小技巧" style="zoom:50%;" />
+<img src=".\img\对比小技巧.gif" alt="对比小技巧" style="zoom:50%;" />
 
 
 
@@ -717,7 +717,7 @@
 
 在组名上点击右键，`取消组合`即可
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\数据透视表组合标签.gif" alt="数据透视表组合标签" style="zoom:50%;" />
+<img src=".\img\数据透视表组合标签.gif" alt="数据透视表组合标签" style="zoom:50%;" />
 
 除了人员，也可以组合日期等功能，这里就留一个小作业，可自行测试
 
@@ -780,7 +780,7 @@
 1. 在`视图`选项卡中，点击`分页预览`
 2. 移动到尾部，查看分页数
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\分页预览.png" alt="分页预览" style="zoom:50%;" />
+<img src=".\img\分页预览.png" alt="分页预览" style="zoom:50%;" />
 
 3. 我们可以看到，在样例中分页数是4，而打印预览中，分页数是10。那么剩下的分页跑哪里去了呢？
 
@@ -790,7 +790,7 @@
 
 
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\分页预览.gif" alt="分页预览" style="zoom:50%;" />
+<img src=".\img\分页预览.gif" alt="分页预览" style="zoom:50%;" />
 
 5. 再次点击`打印预览`，查看页数一致即可
 
@@ -802,7 +802,7 @@
 2. 在`页面布局`中，点击`分隔符`，点击`插入分页`即可
 3. 如果插入错误，重复上述步骤，把`插入分页`换成`删除分页`即可
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\插入分页.gif" alt="插入分页" style="zoom:50%;" />
+<img src=".\img\插入分页.gif" alt="插入分页" style="zoom:50%;" />
 
 **小提示：**打印时不会打印表格线，可以按照我们之前课程中学过的方式设定表格线，也可以直接在`页面布局`中，找到`网格线>打印`按钮进行选中
 
@@ -814,7 +814,7 @@
 2. 点击后，再次点击`顶端标题行`，然后去**选中标题列**
 3. 此时打印预览即发现，每页都有标题
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\分页标题设置.gif" alt="分页标题设置" style="zoom:50%;" />
+<img src=".\img\分页标题设置.gif" alt="分页标题设置" style="zoom:50%;" />
 
 #### 调整表格宽高
 
@@ -864,7 +864,7 @@
 
 **注意：** **页脚**按钮中推荐的标签名，即**工作表名**。**双击修改**它即可修改推荐的名字
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\工作表.png" alt="工作表" style="zoom:50%;" />
+<img src=".\img\工作表.png" alt="工作表" style="zoom:50%;" />
 
 #### 水印设置
 
@@ -884,4 +884,4 @@
 12. 再次点击`设置图片格式`，点击`图片`选项卡，`图像控制>颜色`，选择`冲蚀`。如果图片不够大可以尝试放大图片
 13. 设置完成后，如果想调整图片位置至居中，可以在**页眉**，点击`Enter`回车图片，直至居中即可
 
-<img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Excel表格\img\水印设置.gif" alt="水印设置" style="zoom:67%;" />
+<img src=".\img\水印设置.gif" alt="水印设置" style="zoom:67%;" />
