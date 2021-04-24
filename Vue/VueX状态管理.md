@@ -241,11 +241,22 @@ Actions传递的是上下文context，**和store对象**具有相同的方法和
     	}
 2.  从actions提交到mutations
      actions:{
-    	  actionInfo(context,payload){
+       /**
+       	* 方法一：
+       	*/
+        actionInfo({commit},payload){
           setTimeout(()=>{
-            context.commit('mutationInfo',payload)
+            commit('mutationInfo',payload)
           },1000)
-    	  }
+        }
+       /**
+       	* 方法二：
+       	*/
+        // actionInfo(context,payload){
+        //   setTimeout(()=>{
+        //     context.commit('mutationInfo',payload)
+        //   },1000)
+        // }
     	}
 3.  再由mutations改变state
      mutationInfo(state,payload){
@@ -435,7 +446,34 @@ computed:{
 Vue使用单一状态树,那么也意味着很多状态都会交给Vuex来管理.  
 当应用变得非常复杂时,store对象就有可能变得相当臃肿.  
 为了解决这个问题, Vuex允许我们将store分割成模块(Modules), 
-而每个模块拥有自己的state、mutations、actions、getters等
+而**每个模块拥有自己的state、mutations、actions、getters等**
+
+```js
+let moduleA = {
+  state:{
+    name:'test',
+    age:18
+  },
+  mutations:{
+    // ...
+  },
+  actions:{
+    // ...
+  }
+}
+
+const store = new Vuex.Store({
+    state,
+    mutations,
+    actions,
+    getters,
+    modules:{
+      a:moduleA
+    }
+})
+```
+
+
 
 #### 获取模块中state
 

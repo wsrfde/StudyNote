@@ -1,348 +1,3 @@
-# Vue基础学习笔记
-
-<br>
-
-### 方法和函数的区别
-1. 面向对象的时候称为方法，面向流程的时候叫函数。  
-2. 方法是作为一个对象实例的属性的函数  
-
-
-<br>
-
-### 生命周期
-
-生命周期：事务从诞生到消亡的整个过程  
-以下是生命周期函数，可以在某个周期做某件事
-
-	[
-		'beforeCreate',
-		'created',		//组件创建完成
-		'beforeMount',
-		'mounted',		//DOM树创建完成
-		'beforeUpdate',	//数据更新前   可以更改数据
-		'updated',		//DOM更新完成   最好不要在这里改数据，会发生死循环
-		'beforeDestroy',	//事件的移除  清空定时器
-		'destroyed',	//手动移除组件或路由切换，会发生视图改变
-		'activated',	//钩子函数，需要作用keep-alive下
-		'deactivated',	//钩子函数，需要作用keep-alive下
-		'errorCaptured',
-		'serverPrefetch'
-	  ]
-
-
-<br>
-
-### 计算属性  
-
-> computed：运行时作为一个属性来添加，所以调用里面函数时不用加括号()  
-
-
-注：函数起名时不要用动词，因为computed时作为属性来调用，如getBgColor => BgColor  
-
-**区别：**  
-	conputed在多次调用时只执行一次，有缓存，只做数据处理  
-	methods是调用几次执行几次，没有缓存，浪费性能  
-
-
-
-<br>
-
-### 函数重载
-
-在js中相同名的函数，下面的函数会覆盖上面的  
-
-在typescript中，函数重载指
-* 两(多)个函数的函数名相同
-* 传入的参数不同
-* 与返回值无关
-
-
-<br>
-
-### v-on的参数问题
-
-1. 如果该方法不需要额外参数，那么调用方法时()可以不添加。  
-
-		@click = 'getBtn'
-2. 如果方法中有参数，调用时没有添加()和参数,则默认传入event
-3. 如果需要同时传入某个参数，同时需要event时，可以通过$event传入事件。  
-
-		@click = 'getBtn("abc",$event)'  
-	
-
-<br>
-
-### v-on的修饰符
-
-* .stop - 调用 停止事件冒泡 event.stopPropagation() 。
-
-   `<a v-on:click.stop="doThis"></a>`
-
-* .prevent - 调用 阻止默认事件 event.preventDefault()。
-		`<form v-on:submit.prevent="onSubmit"></form>`
-	
-* 修饰符可以串联
-		
-	
-		`<a v-on:click.stop.prevent="doThat"></a>`
-	
-* .{keyCode | keyAlias} - 只当事件是从特定键触发时才触发回调。
-
-   ```js
-   <input type="text" @keyup="keyup($event.which)"> 	//监听键码
-   <input type="text" @keyup.tab="keyup()"> 
-   <input type="text" @keyup.13='keyup()'>
-   ```
-
-* .self - 只当在 event.target 是当前元素自身时触发处理函数 
-
-   即事件不是从内部元素触发的
-
-   `<div v-on:click.self="doThat"></div>`
-
-* .native - 监听组件根元素的原生事件。
-
-* .once - 只触发一次回调。
-
-
-<br>
-
-### v-if、v-else-if、v-else  
-
-> **原理：**  
-
-v-if后面的条件为布尔值，为flase时对应的元素以及其子元素不会渲染。
-
-	<h2 v-if="ishow">当ishow为true时，显示我</h2>
-	<h2 v-else>当ishow为false时，显示我</h2>
-
-这三个指令和JavaScript的指令类似  
-
-> **bug注意：**  
-* v-if的渲染时为虚拟dom，为了节省内存会把判断有无原标签，有的话原标签复用。  
-* 但后果是如果输入input标签进行if else切换会出现原来输入的value还存在的问题。  
-* 解决方法是在标签内部添加key，key值不一样不会复用。   _ps: key='new'_
-
-
-<br>
-
-### v-show
-
-v-show和v-if非常相似，用于决定一个Dom会不会渲染
-true渲染，false隐藏
-
-> **区别：**
-* v-show是在标签内部添加行内样式display='none'
-* v-for是直接创建或移除Dom
-* 实际开发中我们用v-for多一点
-
-
-<br>
-
-### v-for
-
-> v-for遍历数组
-
-```html
-<!-- 项目，下标 -->
-<p v-for="(item,index) in message">{{index}}-{{item}}</p>
-```
-
-<br>
-
-> v-for遍历对象
-
-```html
-<!-- 值，键，下标 -->
-<li v-for="(value,key,index) in message">{{index+'.'+key+'-'+value}}</li>
-```
-
-<br>
-
-### v-for 组件的key属性
-
-* 官方推荐我们使用v-for时，给对应的元素或组件添加上一个:key属性。  
-* Vue的虚拟DOM的Diff算法在更新操作节点时，给某个元素插入赋值，
-	后面的元素依次更新，没有则重新创建dom再赋值，来完成节点操作，
-	这样的效率很慢```ps：ABCD => ABECD中，c=>e，d=>c，''=>d```
-* 添加key可以给每个元素做唯一标识，Diff算法就可以正确识别节点准确更新
-* **所以，key的作用主要是为了高效的更新虚拟DOM。**
-
-#### 使用key的示例
-
-```html
-<!--如果是静态资源，key可以使用index，但如果不是，则使用id保证当前item的key则是唯一的-->  
-<p v-for="item in message" :key='item.id'>{{item}}</p>
-```
-
-#### 使用template时不能用key怎么办?
-
-> template是空标签，key必须要绑定到真实dom上
-
-```html
-<template v-for='(item,index) in arr'>
-  <p :key='`name${index}`'>{{item}}</p>
-  <p :key='`index${index}`'>{{index}}</p>
-</template>
-```
-
-#### vue的复用策略
-
-当使用if进行替换操作时，vue默认会复用原来的dom，解决办法便是加上key
-
-```html
-<template v-if='isShow'>
-  <div>我是A</div>
-  <input type="text" key='1'>
-</template>
-<template v-if='!isShow'>
-  <div>我是B</div>
-  <input type="text" key='2'>
-</template>
-```
-
-
-
-<br>
-
-### vue数据响应式
-
-> 响应式是指数据可以动态响应到页面上，不需要手动刷新
-
-**如果数组里是对象，直接更改即可，如果是纯数组，则需要用到以下的方法**
-
-> 以下方法操作数组vue都是响应式的  
-* push()
-* pop()
-* shift()
-* unshift()
-* splice()
-* sort()
-* reverse()  
-
-
-> 直接使用下标的方式来改变数组不是响应式  
-
-	this.arr[0] = 'aaa'  
-
-解决办法  
-
-	(被修改的obj/数组，key/下标，要修改的值)
-	Vue.set(this.arr,0,'bbb')
-
-> 删除数据delete也不是响应式
-
-	delete this.obj.age;
-
-解决办法
-
-	(被删除的obj，key)
-	Vue.delete(this.obj,'age')
-
-### vue的初始化选项
-
-获取vue最开始定义的属性值，并不会被后来的改变所影响
-
-```js
-let vm = new Vue({
-  el:'#app',
-  customOption:'foo'
-})
-vm.customOption = 'obj';
-
-console.log(vm.$options.customOption) //foo
-```
-
-
-
-<br>
-
-### 过滤器(filters)
-
-* 过滤器filters和计算属性computed都是vue的一种方法  
-* 内部也是一种函数方法，返回过滤后的值
-* 和computed一样，调用时无需加括号()
-* 但过滤器函数内可以传值，传递的是当前被过滤的数据
-
-
-```js
-<h2>{{数据 | 过滤器}}</h2>
-```
-
-```html
-<div id='app'>
-	<h2>{{message | changeMessage}}</h2>
-</div>
-
-<script>
-	const app = new Vue({
-		el:'#app',
-		data:{
-			message:1.23
-		},
-		filters:{
-			changeMessage(value){
-				//toFixed是显示小数点后几位
-				return value.toFixed();
-			}
-		}
-	})
-</script>
-```
-
-<br>
-
-### 监听data属性(watch)
-
-> 用法是监听data的属性，当属性发生改变调用函数。和methods同级
-
-注意：不要使用箭头函数来定义watch函数。因为箭头函数指向父级作用域上下文，不会指向vue实例
-```js
-	watch:{
-	  name(){
-      //执行函数...
-			setTimeout(this.refresh,20)
-	  }
-	}
-```
-
-#### watch的高级用法
-
-```js
-watch:{
-  name:{
-    handler(newVal){    //watch的处理函数
-      console.log(newVal);
-    },
-      immediate:true,   //即时：第一次定义data时也被监控
-      deep:true,    //深层：监控data中对象中的参数
-      lazy:true     //懒惰：compouted的实现
-  }
-}
-```
-
-
-
-<br>
-
-### img加载监听
-
-原生的js监听图片: 
-
-	img.onload = function() {}  
-Vue中监听:  
-
-	@load='方法'
-
-### $nextTick下一帧
-
-$nextTick()内部传递箭头函数
-
-意为箭头函数可以在其他函数运行完的下一帧运行。 
-
- 
-
-
 # Vue高级技巧	
 
 ### 事件总线
@@ -354,14 +9,14 @@ $nextTick()内部传递箭头函数
 在vue原型中创建Vue实例，利用vue的事件总线进行发射接收
 
 * 创建$bus
-		`Vue.prototype.$bus = new Vue()`
+  	`Vue.prototype.$bus = new Vue()`
 * 发射事件 
-		//参数可以省略
-		`this.$bus.$emit('事件名',参数)`
+  	//参数可以省略
+  	`this.$bus.$emit('事件名',参数)`
 * 监听事件 
-		//监听事件总线一般会在生命周期函数mounted中监听
-		`this.$bus.$on('事件名',()=>{})`
-		
+  	//监听事件总线一般会在生命周期函数mounted中监听
+  	`this.$bus.$on('事件名',()=>{})`
+  	
 
 注意：  
 使用$bus要在destroyed生命周期函数中使用$off销毁，要不然会叠加触发次数 
@@ -422,7 +77,7 @@ function debounce(fun,delay){
 **使用方法**  
 
 1. 传入函数和延时const backFun = debounce(function,delay)。  
-	//这里function如果是一个方法不要加()，如果是待执行操作则嵌套再箭头函数内传递。
+   //这里function如果是一个方法不要加()，如果是待执行操作则嵌套再箭头函数内传递。
 2. 调用返回函数backFun()
 3. args是如果在调用backFun()时，里面可以传参数，(...args)时es6数组解构，可以传多个参数
 
@@ -444,10 +99,11 @@ btnEle.onclick = function () {		//这里模拟多次点击调用防抖函数
 ```
 
 注意事项
+
 1. 如果我们在多个页面中使用防抖函数，可把防抖函数封装成函数导出
 2. 把使用方法封装在mixin中，并把debouce返回的函数用data的属性来保存，不要用const或let
-	1. 好处一、混入返回的是新的变量，不会影响原来的页面
-	2. 好处二、如果在函数中调用，data保存可以防止防抖函数不断销毁重新创建的问题
+   1. 好处一、混入返回的是新的变量，不会影响原来的页面
+   2. 好处二、如果在函数中调用，data保存可以防止防抖函数不断销毁重新创建的问题
 
 ### 节流throttle
 
@@ -517,40 +173,42 @@ mixin中可以看作类似Vue实例，data/methods/生命周期函数等都可�
 **继承和混入的区别**：**继承是继承原来的变量，混入是返回一个新的变量**
 
 使用示例
-1. 导出mixin
-		
-	```js
-	//myMixin.js
-	
-	export let myMixin = {
-	  data(){
-			return{
-			  message:'hello mixin'
-	    }
-	  },
-	  methods:{
-			testFun(){
-				console.log(this.message)
-			}
-	  }
-	};
-	```
-	
-	
-	
-2. 在需求页导入
-      `import {myMixin} from "./mixin";`
-      	  
 
-      ```js
-        new Vue({
-      	  //mixins和data同级，注意这里有复数s
-      	  mixins:[myMixin],
-      	  create:{
-      		  this.testFun()
-      	  }
-        })
-      ```
+1. 导出mixin
+   	
+
+   ```js
+   //myMixin.js
+   
+   export let myMixin = {
+     data(){
+   		return{
+   		  message:'hello mixin'
+       }
+     },
+     methods:{
+   		testFun(){
+   			console.log(this.message)
+   		}
+     }
+   };
+   ```
+
+   
+
+2. 在需求页导入
+   `import {myMixin} from "./mixin";`
+   	  
+
+   ```js
+     new Vue({
+   	  //mixins和data同级，注意这里有复数s
+   	  mixins:[myMixin],
+   	  create:{
+   		  this.testFun()
+   	  }
+     })
+   ```
 
 ### Vue封装插件
 
@@ -585,12 +243,12 @@ export default obj
 ```
 
 9. 在main.js中导入，并使用vue进行安装
-		`import toast from './toast'`
-	`Vue.use(toast)`	
-	
+   	`import toast from './toast'`
+   `Vue.use(toast)`	
+
 10. 通过this.$toast来调用对象(组件)toast的方法把~
-	
-	`this.$toast.show();`
+
+    `this.$toast.show();`
 
 
 
@@ -971,3 +629,332 @@ export default {
 
 
 
+### 从0编写Element-UI中的Message组件
+
+> 用过Element-UI的同学都知道，message消息提示的弹窗调用非常方便，那么我们如何自己封装一个自己的message组件呢
+
+🌈思路：
+
+查看Element UI中message的组件，当调用时发现body中多一个div，div中展示的则是message弹窗
+
+知道了行为那么我们就可以按照它的方式来编写代码
+
+
+
+💌提示：
+
+本文章按照思路和步骤从0封装，直接想看最终代码的可以跳转到第5️⃣条
+
+
+
+1️⃣、首先我们按照Element中menssage 的调用方法来编写methods
+
+```vue
+// App.vue
+
+<template>
+  <div id="app">
+    <button @click="show">按钮</button>
+  </div>
+</template>
+
+<script>
+  import {Message} from "./components/Message.js";   //导入Message方法
+
+  export default {
+    name: 'App',
+    methods: {
+      show() {
+    		 Message.success({
+          msg: '你好',
+          duration: 3000
+        })
+      }
+    }
+  }
+</script>
+```
+
+2️⃣、在components中创建Message.js 和 MessageComp.vue
+
+> 通过Vue实例$mount渲染模板的方法，来把MessageComp.vue组件挂载到内存中，并调用组件中的方法，来实现
+
+```js
+// components/Message.js
+import Vue from 'vue'
+import MessageComp from "./MessageComp.vue";
+
+let Message = {
+  success(options) {
+    // 点击弹出层 将.vue文件挂在到内存中
+    let instance = new Vue({
+      render: h => h(MessageComp)
+    }).$mount()
+    // 将渲染好的内容添加到页面
+    document.body.appendChild(instance.$el)
+  }
+}
+
+export  {
+  Message
+}
+```
+
+```vue
+// components/MessageComp.vue
+
+<template>
+  <div>
+    我是弹窗
+  </div>
+</template>
+```
+
+现在已经可以正常弹窗了，但是这样是不是有点low啊，而且我们想要以数据驱动视图，而不是每次点击弹出的都是固定的东西
+
+3️⃣、需要数据驱动视图，那么我们就可以需要在MessageComp.vue组件中添加数组，动态渲染弹窗，并且添加push数组的方法，当调用时添加弹窗
+
+```vue
+// components/MessageComp.vue
+
+<template>
+  <div>
+    <div v-for="item in list" :key="item.id">
+      {{item.msg+item.id}}
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: "MessageComp",
+    data() {
+      return {
+        list: []
+      }
+    },
+    mounted() {
+      this.id = 0 // 需要一个id来找到当前列表，但并不需要进行对id进行数据监听，所以直接写到mounted中
+    },
+    methods: {
+      add(option) {
+        let item = { ...option, id: ++this.id }
+        this.list.push(item)
+        // 关闭弹窗
+        item.timer = setTimeout(() => {	// 在add方法中调用setTimeout并赋值timer的好处是：
+          this.closeMsg(item)						// 在closeMsg时，可以实时得到timer并进行clearTimerout
+        }, item.duration)
+      },
+      closeMsg(item) {
+        clearTimeout(item.timer)
+        let itemIndex = this.list.indexOf(item)
+        this.list.splice(itemIndex, 1)
+      }
+    }
+  }
+</script>
+
+<style scoped>
+
+</style>
+
+```
+
+```js
+// components/Message.js
+import Vue from 'vue'
+import MessageComp from "./MessageComp.vue";
+
+let Message = {
+  success(options) {
+    // 点击弹出层 将.vue文件挂在到内存中
+    let instance = new Vue({
+      render: h => h(MessageComp)
+    }).$mount()
+    // 将渲染好的内容添加到页面
+    document.body.appendChild(instance.$el)
+    instance.$children[0].add(options)		//MessageComp组件在instance中挂载，所以MessageComp是instance的子节点，通过		
+  }																				//$children查找并调用其方法
+}
+
+export  {
+  Message
+}
+```
+
+但这样有一个坏处，就是每次调用success方法都会对重新创建实例进行渲染，并且性能也不高。
+
+4️⃣、所以我们需要只创建一次实例即可，success方法只调用实例中的add方法
+
+```js
+// components/Message.js
+import Vue from 'vue'
+import MessageComp from "./MessageComp.vue";
+
+let instance;
+
+function setInstance() {
+  instance = new Vue({
+    render: h => h(MessageComp)
+  }).$mount()
+  document.body.appendChild(instance.$el)
+}
+
+
+let Message = {
+  success(options) {
+    !instance && setInstance()
+    instance.$children[0].add(options)
+  },
+  warn() {
+    // ...
+  },
+  info() {
+    // ...
+  }
+}
+
+export  {
+  Message
+}
+```
+
+ 
+
+5️⃣、这样一个自定义的组件基本上就完成了，但是我们看到Element-UI中的messsage组件是通过this.$message来进行调用的，那我们怎么做到呢
+
+通过Vue.use()方法对message属性进行全局挂载，具体怎么做呢，show code
+
+```js
+// components/Message.js
+import Vue from 'vue'
+import MessageComp from "./MessageComp.vue";
+
+let instance;
+
+function setInstance() {
+  instance = new Vue({
+    render: h => h(MessageComp)
+  }).$mount()
+  document.body.appendChild(instance.$el)
+}
+
+
+let Message = {
+  success(options) {
+    !instance && setInstance()
+    instance.$children[0].add(options)
+  },
+  warn() {
+    // ...
+  },
+  info() {
+    // ...
+  }
+}
+
+
+export default {
+  install(_Vue) { // 使用vue.use时默认回调用install方法，并传入Vue构造函数
+    // install中一般会做三件事 1. 注册全局组件 2. 注册全局指令 3. 往原型上添加方法
+    let $message = {}
+    Object.keys(Message).forEach(key => { // 这里没有直接对$message=Message，防止改动$message时message也跟着改动，所以进行
+      $message[key] = Message[key]      	// 深拷贝对象
+    })
+    _Vue.prototype.$message = $message
+  }
+}
+
+```
+
+```vue
+// components/MessageComp.vue
+
+<template>
+  <div>
+    <div v-for="item in list" :key="item.id">
+      {{item.msg+item.id}}
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: "MessageComp",
+    data() {
+      return {
+        list: []
+      }
+    },
+    mounted() {
+      this.id = 0 // 需要一个id来找到当前列表，但并不需要进行对id进行数据监听，所以直接写到mounted中
+    },
+    methods: {
+      add(option) {
+        let item = { ...option, id: ++this.id }
+        this.list.push(item)
+        // 关闭弹窗
+        item.timer = setTimeout(() => {	// 在add方法中调用setTimeout并赋值timer的好处是：
+          this.closeMsg(item)						// 在closeMsg时，可以实时得到timer并进行clearTimerout
+        }, item.duration)
+      },
+      closeMsg(item) {
+        clearTimeout(item.timer)
+        let itemIndex = this.list.indexOf(item)
+        this.list.splice(itemIndex, 1)
+      }
+    }
+  }
+</script>
+
+<style scoped>
+
+</style>
+
+```
+
+```vue
+<template>
+  <div id="app">
+    <h3>第10课-message组件</h3>
+    <button @click="show">按钮</button>
+
+  </div>
+</template>
+
+<script>
+  // import {Message} from "./components/Message.js";   //导入Message方法
+  import Vue from 'vue'
+  import Message from "./components/Message.js";
+  Vue.use(Message)    // 使用全局方法 this.$message
+
+  export default {
+    name: 'App',
+    methods: {
+      show() {
+        // Message.success({
+        //   msg: '你好',
+        //   duration: 3000
+        // })
+        this.$message.success({
+          msg: '你好',
+          duration: 3000
+        })
+      }
+    }
+  }
+</script>
+
+<style>
+
+</style>
+
+```
+
+
+
+💣踩坑：注意，Message.js 首字母必须大写，否则提示message.js not found 。不知道是什么原因导致冲突，vue的bug还是开启了eslint的原因？
+
+我的环境：win10，webstorm，eslint。有知道原因的可以告知感激不尽
+
+🐱‍💻🐱‍🐉🐱‍👓🐱‍👓
