@@ -4,6 +4,8 @@
 
 ![](.\img\oauth\接入流程.png)
 
+[QQ互联网站流程接入文档](https://wiki.connect.qq.com/成为开发者)
+
 ### 注册QQAPI
 
 #### 审核资料
@@ -42,4 +44,7 @@ cnpm i
 SET DEBUG=qqoauth:* & npm start	 ## run 项目  ，这里有个坑，要用CMD命令行去运行
 ```
 
-当提示 `  qqoauth:server Listening on port 3000 +0ms` 时，则运行成功，打开`localhost:3000`
+当提示 `  qqoauth:server Listening on port 3000 +0ms` 时，则运行成功，打开`localhost:3000`即可
+
+
+

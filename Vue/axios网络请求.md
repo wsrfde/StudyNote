@@ -39,8 +39,8 @@ axios: ajax i/o system
     ```js
       url:'http://被请求的接口',
       method:'get或post',
-      params:{针对get请求的参数拼接},
-      data:{针对post请求时参数获取}
+      params:{适用于GET...的请求的参数拼接},
+      data:{针对POST/PUT/PATCH的请求时参数获取}
     ```
 
 4. axios支持promise，成功后回调then，失败回调catch
