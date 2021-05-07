@@ -546,3 +546,12 @@ this.$store.commit('moduleA/setModuleA')
 > * <a href='#b'>getters传参技巧第3点</a>  
 * <a href='#c'>mutations传参技巧第3点</a>
 * <a href='#d'>actions返回promise</a>
+
+
+
+Vuex源码编写
+
+```js
+
+```
+
