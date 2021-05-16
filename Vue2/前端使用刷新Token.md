@@ -13,7 +13,7 @@
 5. 当传递refreshToken时请求任意接口都可获得token和refreshToken（或者让后端单独写获取接口）
 6. 保存token和refreshToken，然后响应拦截器中重新请求上次未完成的请求，并返回数据
 
-![](C:\Users\CSIT\Desktop\Vicer\study-note\Vue\img\refreshToken\思维脑图.png)
+![](.\img\refreshToken\思维脑图.png)
 
 Talk is cheap , show me code
 

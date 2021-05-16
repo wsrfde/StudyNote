@@ -173,38 +173,30 @@ const {AppId, appKey, redirect_uri, fetchTokenUrl, fetchOpenIdUrl, fetchUserInfo
 
 
 
-## 建立自己的oauth系统
+## 完成微信第三方登入（前端篇）
 
-### 创建客户端和服务端
+> 微信的官方文档中已经写的很清楚，这里注明踩过的几个坑
 
-```
-express oauth-client  ## 创建客户端
-cd oauth-client
-cnpm i
-SET PORT=4000  												 ## 注意：需要在CMD命令行中执行
-SET DEBUG=oauth-client:* & npm start   ## 注意：需要在CMD命令行中执行
 
-express oauth-server  ## 创建服务端
-cd oauth-server
-cnpm i
-SET PORT=5000
-SET DEBUG=oauth-server:* & npm start  
-```
 
-并更换所有的视图模板引擎为html （客户端和服务端都更换）
+### 一、申请网站应用
+
+注意，申请网站URL的时候不要填写协议(http或https)，不要填写协议，不要填写协议（重要的事情说三遍！）
+
+只填写域名即可（二级或一级域名都行），如（www.aaa.com）或者（second.aaa.com）
+
+### 二、申请code
+
+注册好应用后，按照[官方文档](https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Wechat_Login.html)的方式填写参数
+
+前端添加一个微信图片，然后在图片上添加跳转到新的空白页面。
+
+空白页面中代码如下：showMeCode
 
 ```js
-// app.js
-// view engine setup  设置视图引擎为html
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'html');
-app.engine('html',require('ejs').__express)
 ```
 
-安装bootstrap3  （客户端）
 
-```
-cnpm i bootstrap@3  
-# 并把node_modules 中的dist文件复制到public中进行使用
-```
+
+
 
