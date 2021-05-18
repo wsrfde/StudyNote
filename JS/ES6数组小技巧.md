@@ -85,7 +85,7 @@ const getName = function (item) { return item.includes('群')}
 const flatArr = Object.values(obj).flat().filter(item => getName(item))
 // 经大佬指点，更加简化（发现自己的抽象能力真的差~）
 const flatArr = Object.values(obj).flat().filter(getName)
-复制代码
+
 ```
 
 二维数组用`array.flat()`，三维及以上用`array.flatMap()`。

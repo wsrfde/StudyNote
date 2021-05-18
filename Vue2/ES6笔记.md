@@ -15,7 +15,7 @@ const注意事项：
 		name:'vicer',
 		age:18
 	}
-
+	
 	const vicer = Obj.freeze(person) 
 	vicer.age=20    //修改失败
 	```
@@ -127,7 +127,7 @@ console.log(a,b,c)
 }
 test(1,2,3,4,5,6,7)	//1,2,Array
 ```
-### 结构赋值
+### 解构赋值
 
 1. 两边结构必须一样
 2. 右边必须是一个东西
@@ -207,7 +207,7 @@ test('vicer');
 	
 2. 当箭头函数只有一行时必须省略花括号
 		`const e = n => n+n`
-注：省略花括号{}时无需再写return，系统会自动返回值
+	注：省略花括号{}时无需再写return，系统会自动返回值
 
 ### 箭头函数的this使用
 
