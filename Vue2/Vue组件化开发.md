@@ -223,7 +223,6 @@ _ps：根组件指new Vue()_
 		<div>{{cMovies}}</div>
 	</template>
 	```
-	
 
 #### props两种配置类型
 
@@ -231,7 +230,7 @@ _ps：根组件指new Vue()_
 		props:['cmovies','cmessage']
 	
 2. 对象类型  
-对象中type类型验证都包括  
+	对象中type类型验证都包括  
 
 		String/Number/Boolean/Array/Object/Date/Function/Symbol
 
@@ -529,11 +528,11 @@ showChild(){
 <son :count.sync="count"></son>  <!-- sync等于如上操作 -->
 
 <script>
-	data(){
-  	return {
-    	count:0
-  	}
-	}  
+data(){
+   return {
+       count:0
+   }
+}  
 </script>
 ```
 
