@@ -40,7 +40,7 @@ axios: ajax i/o system
       url:'http://被请求的接口',
       method:'get或post',
       params:{适用于GET...的请求的参数拼接},
-      data:{针对POST/PUT/PATCH的请求时参数获取}
+      data:{针对POST/PUT/PATCH/DELETE的请求时参数获取}
     ```
 
 4. axios支持promise，成功后回调then，失败回调catch
@@ -205,7 +205,6 @@ axios: ajax i/o system
 2. 函数中返回一个promise，在promise中嵌套axios实例
 3. 实例回调result中再使用promise的回调，把回调的结果返回出去
 4. 在请求页面导入，因已返回结果，所以直接传入axios配置，然后正常then/catch即可。
-	
 
 ```javascript
 import axios from 'axios'
