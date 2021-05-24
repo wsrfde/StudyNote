@@ -181,7 +181,7 @@ const {AppId, appKey, redirect_uri, fetchTokenUrl, fetchOpenIdUrl, fetchUserInfo
 
 ### 一、申请网站应用
 
-注意，申请网站URL的时候不要填写协议(http或https)，不要填写协议，不要填写协议（重要的事情说三遍！）
+注意，申请网站URL的时候**不要填写协议(http或https)，不要填写协议，不要填写协议（重要的事情说三遍！）**
 
 只填写域名即可（二级或一级域名都行），如（www.aaa.com）或者（second.aaa.com）
 
@@ -193,10 +193,108 @@ const {AppId, appKey, redirect_uri, fetchTokenUrl, fetchOpenIdUrl, fetchUserInfo
 
 空白页面中代码如下：showMeCode
 
-```js
+```html
+<el-tooltip
+  content="微信登录"
+  effect="light"
+  :hide-after="3000"
+  placement="right"
+>
+  <vab-icon
+    icon="wechat"
+    :is-custom-svg="true"
+    @click="openNewPage"
+  />
+</el-tooltip>
+
+<script>
+ methods：{
+   openNewPage() {
+      this.isClosePage = false		// 初始化开关
+      const originHref = window.location.origin
+      window.open(originHref + '/wechat/login')	//跳转微信登入页
+      window.addEventListener('storage', this.refreshPage)	//使用storage监听事件，可以监听多页面的storage保存状态
+      this.$on('hook:destroyed', () => {	// hook方法，组件销毁时移除监听
+        window.removeEventListener('storage', this.refreshPage)
+      })
+    },
+    refreshPage() {
+      const token = getToken()
+      const refreshToken = getRefreshToken()
+      if (Boolean(token) && Boolean(refreshToken) && !this.isClosePage) {
+        this.isClosePage = true		// 设置开关，因为storage更新时会更新多次
+        location.reload()
+      }
+    }
+ }
+</script>
 ```
 
+```html
+// WechatLogin.vue
 
+<template><div></div></template>
+<script>
+  import { getWechatLoginToken } from '@/api/wechat'
+  import { setToken, setRefreshToken } from '@/utils/token'
+  import qs from 'qs'
+  import { getQueryVariable } from '@/utils/getQueryVariable'
 
+  export default {
+    name: 'WechatLogin',
+    mounted() {
+      // 回调页面，获取code和state
+      let callbackCode = getQueryVariable('code')
+      let callbackState = getQueryVariable('state')
+      let wxState = localStorage.getItem('wx_state')
+      if (callbackState && wxState === callbackState) {
+        this._getWechatLoginToken(callbackCode)
+      } else {
+        //没有回调则跳转到微信登入
+        this.pageJump()
+      }
+    },
+    methods: {
+      pageJump() {
+        const getCodeUrl = 'https://open.weixin.qq.com/connect/qrconnect?'
+        const appid = 'wxaaaaaaaaaaaaaa'	//填入你申请的appid
+        //填写你申请好的回调url，注意申请的时候不要带http://或https:// ,上面有写示例
+        const redirect_uri = 'https://auth.aaa.com/wechat/login'
+        const state = new Date().getTime().toString()	// 防止csrf攻击
+        localStorage.setItem('wx_state', state)	// 设置state，再回调的时候来进行对比两次是否一致
+        const option = {
+          appid,
+          redirect_uri,
+          response_type: 'code',
+          scope: 'snsapi_login',
+          state,
+        }
+        //qs.stringify 将对象序列化成URL的形式，以&进行拼接
+        window.location.href =
+          getCodeUrl + qs.stringify(option) + '#wechat_redirect'	
+      },
+      _getWechatLoginToken(code) {
+        getWechatLoginToken(code).then((res) => {
+          localStorage.setItem('wx_state', '')
+          if (res.code === 2000) {
+            let data = res.data
+            let { token, refresh_token } = data
+            setToken(token)	// 里面就是储存方法，setLocalStorage
+            setRefreshToken(refresh_token)
+            window.location.href = 'about:blank'
+            window.close()	// 关闭窗口
+          } else {
+            this.$baseNotify('登入异常，请尝试重新登入', '提示', 'error')
+          }
+        })
+      },
+    },
+  }
+</script>
+```
 
+可以看到，通过回调页面，向微信跳转，跳转验证并登入成功后，微信会返回给我们code。
 
+之后我们发送给后端，后端返回给我们Token之后，通过localStorage保存。
+
+而登入页面监测到localStorage后刷新页面，并关闭回调页面，则登入完成    （前端基本操作的已完成）

@@ -20,6 +20,36 @@ Talk is cheap , show me code
 ```js
 // request.js
 
+const handleData = async ({ config, data, status, statusText }) => {
+
+  switch (code) {
+    case 2000:
+      return data
+    case 4002:
+      //--------------------------更新前--------------------------
+      // 根据网上教程，当402时获取Token，然后根据Token再次请求上次未请求成功的数据，并返回
+      //let newToken = await store.dispatch('user/needRefreshToken', true)
+      //config.headers['Authorization'] = `Bearer ${newToken}`
+      //return await axios.request(config)
+      //--------------------------更新后--------------------------
+      // 因为项目中设置了拦截器，获取刷新token后我们还想继续使用拦截器，然后直接通过实例并传入config返回即可
+      // （这里config是一个对象，包含请求信息，baseUrl等，通过config的信息axios会进行解析）
+      await store.dispatch('user/needRefreshToken', true)
+      return instance(config)
+    default:
+      break
+  }
+   return Promise.reject(err)
+}
+
+const instance = axios.create({
+  baseURL: process.env.NODE_ENV === 'development' ? devAPI : proAPI,
+  timeout: requestTimeout,
+  headers: {
+    'Content-Type': contentType,
+  },
+})
+
 /**
  * @description axios请求拦截器
  */
@@ -49,20 +79,6 @@ instance.interceptors.response.use(
   (response) => handleData(response),
   (error) => {}
 )
-const handleData = async ({ config, data, status, statusText }) => {
-
-  switch (code) {
-    case 2000:
-      return data
-    case 4002:
-      let newToken = await store.dispatch('user/needRefreshToken', true)
-      config.headers['Authorization'] = `Bearer ${newToken}`
-      return await axios.request(config)
-    default:
-      break
-  }
-   return Promise.reject(err)
-}
 ```
 
 ```js
@@ -78,7 +94,7 @@ const actions = {
     if (token && refreshToken) {
       commit('setToken', token)	//保存token
       commit('setRefreshToken', refreshToken)	//保存refreshToken
-      commit('needRefreshToken', false)	//请求头refreshToken更改为正常token
+      commit('needRefreshToken', false)	//关闭开关，使请求头refreshToken更改为正常token
     }
     return token
   },
