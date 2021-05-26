@@ -74,7 +74,8 @@
 
 * 直接通过vue的data数据传递
 ```html
-<h2 class="default" :class="[active,line]">{{message}}</h2>
+<!-- 数组语法中，支持使用对象语法 -->
+<h2 class="default" :class="[active,line,{title:isShowTitle}]">{{message}}</h2>
 ```
 <br>
 
@@ -118,6 +119,8 @@
 ```html
 <!-- 属性名写死的话要加引号 -->
 <h2 :style="{fontSize:'30px'}">{{message}}</h2>
+<!-- 属性不想用驼峰的话要加上短横线 -->
+<h2 :style="{'font-size':'30px'}">{{message}}</h2>
 <h2 :style="{fontSize:finalNum+'px',backgroundColor:dataColor}">{{message}}</h2>
 ```
 
@@ -177,7 +180,7 @@
 
 <br> 
 
-### v-bind中的驼峰标识  
+### v-bind中的驼峰标识
 
 * 动态绑定属性时尽量字母小写，因为v-bind不支持大写字母。
 
@@ -185,7 +188,7 @@
 
 * 但仍不建议中间加-，有可能出现不可预期的错误，最好小写字母
 
-		```html
+	```html
 	//这里以props为例
 	<cpn :new-message='message'></cpn>  
 	
@@ -193,10 +196,6 @@
 	  <div>{{newMessage}}</div>
 	</template>
 	```
-	
-	
-	
-	
 
 ### 动态绑定style高级技巧
 
@@ -241,5 +240,40 @@ activeStyle(){
       color: red;
   }
 </style>
+```
+
+### 动态绑定属性名称
+
+```html
+<div :[name]="value">我是内容</div>   
+<!-- <div aaa="123">我是内容</div> -->
+
+<script>
+  data(){
+    return {
+      name:'aaa',
+      value:123,
+    }
+  }
+</script>
+```
+
+### 绑定对象的所有属性到元素上
+
+```html
+<div v-bin="obj">我是内容</div>   
+<!-- <div name="vicer" age="18" height="188">我是内容</div> -->
+
+<script>
+  data(){
+    return {
+      obj:{
+        name:'vicer',
+        age:18,
+        height:188
+      }
+    }
+  }
+</script>
 ```
 

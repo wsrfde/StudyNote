@@ -68,7 +68,14 @@
 3. 如果需要同时传入某个参数，同时需要event时，可以通过$event传入事件。  
 
 		@click = 'getBtn("abc",$event)'  
-	
+
+#### v-on的多个绑定
+
+```html
+<div @click="clickFun" @mousemove="moveFun">我是内容</div>
+<!-- 对象语法 -->
+<div v-on="{click:clickFun,mousemove:moveFun}">我是内容</div>
+```
 
 <br>
 
@@ -90,7 +97,7 @@
 
    ```js
    <input type="text" @keyup="keyup($event.which)"> 	//监听键码
-   <input type="text" @keyup.tab="keyup()"> 
+   <input type="text" @keyup.e="keyup()"> 
    <input type="text" @keyup.13='keyup()'>
    ```
 
