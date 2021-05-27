@@ -1,5 +1,7 @@
 ## Vue3基础笔记
 
+> 本笔记是建立在已知Vue2知识点的一个新技术点补充，并非从0开始学习vue，如有vue2的技术点，请查看vue2文档
+
 ### template模板的两种写法
 
 一、使用script标签，并且标记它的类型为 x-template
@@ -113,5 +115,71 @@ Vue.createApp({
   **介绍：passive主要用在移动端的scroll事件，来提高浏览器响应速度，提升用户体验。**
 
   因为passive=true等于提前告诉了浏览器，touchstart和touchmove不会阻止默认事件，手刚开始触摸，浏览器就可以立刻给与响应；否则，手触摸屏幕了，但要等待touchstart和touchmove的结果，多了这一步，响应时间就长了，用户体验也就差了。
-  
+
+### 侦听器watch
+
+除了vue2中的watch用法，还增加了一个`$watch` 的API，具体用法如下
+
+用法示例  `this.$watch('侦听的数据',()=>{回调函数},watch的配置选项)`
+
+**`$watch`还会有一个返回函数，当调用此函数时停止监听**
+
+```js
+created(){
+  const unwatch = this.$watch("info", function(newInfo, oldInfo) {
+    console.log(newInfo, oldInfo);
+  }, {
+    deep: true,
+    immediate: true
+  })
+  // unwatch()		// 调用停止监听
+}
+```
+
+### Vue3没有filters属性
+
+官方推荐用法
+
+一、使用conputed
+
+```js
+data(){
+  return {
+    books:[
+      {name:'编程书籍',price:100},
+      {name:'算法书籍',price:90},
+      {name:'数据书籍',price:80},
+    ]
+  }
+},
+computed:{
+  filterBooks(){	//这里并不是让你拿到当前得参数进行传值，而是让你对原来得数据进行一层转换
+    return this.books.map(item =>{
+      //这里进行深拷贝，因为如果有两个计算属性，当他们都引用得是一个对象时，会互相影响
+      const newItem = Obj.assign({},item)	
+      newItem.price = "￥"+item.price
+      return newItem
+    })
+	}
+}
+```
+
+二、使用全局方法
+
+```js
+data(){
+  return {
+    books:[
+      {name:'编程书籍',price:100},
+      {name:'算法书籍',price:90},
+      {name:'数据书籍',price:80},
+    ]
+  }
+},
+methods:{
+  filterPrice(price){	
+    return "￥"+price
+	}
+}
+```
 

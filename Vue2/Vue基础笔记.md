@@ -328,6 +328,22 @@ watch:{
 }
 ```
 
+除了上述配置还可以只监听对象中某一属性
+
+```js
+data(){
+  return {
+    obj:{name:'vicer',age:18}
+  }
+},
+watch:{
+  // 注意，此写法只能监听对象中某一属性，不能监听数组中某一属性
+  "obj.name":function(newVal,oldVal){
+    console.log(newVal,oldVal)
+  }
+}
+```
+
 
 
 <br>
