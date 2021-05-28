@@ -136,6 +136,24 @@ created(){
 }
 ```
 
+注意：当变更(不是替换)对象或数组并使用deep选项时，旧值将与新值相同，因为它们的引用指向同一个对象/数组。vue不会保留变更之前值的副本。
+
+```js
+data(){
+  return {
+    info:{name:'vicer',age:18}
+  }
+}
+editInfo(){		// 变更
+  this.info.name = 'tace'		// 此时watch得深度监听，oldVal和newVal相同
+},
+changeInfo(){ //替换
+  this.info = {name:'tace'}		//此时watch得深度监听，oldVal和newVal可以正常监听
+}
+```
+
+
+
 ### Vue3没有filters属性
 
 官方推荐用法
