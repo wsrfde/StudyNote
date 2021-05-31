@@ -192,3 +192,21 @@ area => [['140000','140010','140011'],['140000','140010','140012'],...*100]
 
 
 
+啰嗦一句，如果想要把上述代码封装成组件，只需要把 v-model换成value即可，新增代码如下：
+
+```js
+// v-model="selectVal"
+:value="selectVal"			// 新增代码
+
+props: {					// 新增代码
+   selectVal: {
+    type: Array,
+    default: () => [],
+  }
+}
+
+areaSelect(area){
+  this.$emit('update:selectVal', area)   // 新增代码
+}
+```
+
