@@ -39,7 +39,6 @@ webpack中的代码都是以模块化来进行编写
 **package全局与本地命令**  
 * 当直接在终端运行命令时在全局环境中查找
 * 如果给package中script设置命令，则优先在本地查找
-	
 
 **配置webpack.config.js**
 
@@ -85,7 +84,10 @@ webpack中的代码都是以模块化来进行编写
 ### css-loader使用注意
 
 * 使用css-loader时，只是将css文件加载，还需要再安装style-loader进行渲染dom树
-* module中的use规则，读取顺序是从右向左，所以应该先写style-loader，再写css-loader
+
+* module中的use规则，读取顺序是从右向左，所以应该先写style-loader，再写css-loader，
+
+  如`[ 'style-loader', 'css-loader' ]`
 
 ### url-loader的使用
 
@@ -105,6 +107,8 @@ webpack中的代码都是以模块化来进行编写
 
 **url-loader和file-loader的配置文件只能使用一个**  
 
+安装：`npm install file-loader -D`
+
 开发时默认调用html路径下的图片文件。
 
 如果图片和html不在同一个文件夹，可以在webpack.config.js的output中设置`publicPath:'dist/'` 。
@@ -119,11 +123,32 @@ webpack中的代码都是以模块化来进行编写
 > 开发中打包图片我们想要使用原来的名字，可以在options中自定义文件的名字
 
 ```js
-options: {
-  //img文件夹中，原来文件名+8位哈希值+原格式extension的缩写
-  name:'img/[name].[hash:8].[ext]'
+{
+  test: /\.(png|jpe?g|gif|svg)$/i,
+    use:{
+      loader:"file-loader",
+        options:{
+          // 我们还可以使用placeholder进行命名文件
+          //img文件夹中，原来文件名+8位哈希值+原格式extension的缩写
+          name:'img/[name]_[hash:8].[ext]'
+        }
+    }
 }
 ```
+
+**最常用的placeholder：**
+
+* [ext]： 处理文件的扩展名；
+
+* [name]：处理文件的名称； 
+
+* [hash]：文件的内容，使用MD4的散列函数处理，生成的一个128位的hash值（32个十六进制）；
+
+* [contentHash]：在file-loader中和[hash]结果是一致的（在webpack的一些其他地方不一样，后面会讲到）；
+
+* [hash:]：截图hash的长度，默认32个字符太长了； 
+
+* [path]：文件相对于webpack配置文件的路径
 
 <br>
 
@@ -190,7 +215,7 @@ npm install vue --save
 		//esm:esmodule
 		'vue$':'vue/dist/vue.esm.js'
 	  }
-}
+	}
 	```
 	
 3. 引用组件时必须写扩展名，我们也可以设置，使不写扩展名也可引用
@@ -336,7 +361,7 @@ npm install --save-dev webpack-dev-server@2.9.1
 	devServer:{
 		contentBase:'./dist',
 		inline:true
-}
+	}
 	```
 	
 	注意：  
@@ -375,7 +400,6 @@ npm install --save-dev webpack-dev-server@2.9.1
 4. 修改pageage文件
 
 	* pageage文件中使用npm打包默认调用当前文件夹中webpack.config。
-	
 * 但我们要使用配置分离中的文件，所以script要手动引用相应的config文件
 	
 		  ```js
@@ -384,8 +408,7 @@ npm install --save-dev webpack-dev-server@2.9.1
 			"build": "webpack --config ./build/prod.config.js",
 			"dev": "webpack-dev-server --open --config ./build/dev.config.js"
 		  }
-	```
-	
+	 ```
 5. 修改基础配置文件
 
 	打包中发现直接打包到了配置文件夹，但我们希望其打包到父级目录

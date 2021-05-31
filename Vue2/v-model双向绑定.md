@@ -37,7 +37,7 @@ v-on:input="message = $event.target.value">
 ### v-model与input-radio的结合
 
   1. 两个input-radio都写v-model的时候可以不用写name互斥
-  2. 使用v-model时，给data添加与value相同的数据时，input-radio也会自动选中
+  2. 使用v-model传入空字符串即可，当给data添加与value相同的数据时，input-radio也会自动选中
 
 ### v-model与input-checkbox的结合
 
@@ -48,7 +48,7 @@ v-on:input="message = $event.target.value">
 
 > select一般用的少  
 
-select中传入v-model，v-model传入空数组。option中传入value，
+select中v-model传入空字符串，如果多选则v-model传入空数组。option中传入value，
   选中时则把当前选项传入数组中  
 
 ### v-model修饰符
@@ -70,3 +70,4 @@ select中传入v-model，v-model传入空数组。option中传入value，
 
 + trim修饰符  
   - 去除内容中左右两边空格
+

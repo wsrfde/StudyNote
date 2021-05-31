@@ -63,7 +63,7 @@
 
 3. 重新运行**inspect**，查看`webpack`的变化
 
-   <img src="C:\Users\Vicer\Desktop\整理桌面\学习笔记\Vue\img\cli4\image的loader修改后.png" style="zoom:80%;" />
+   <img src=".\img\cli4\image的loader修改后.png" style="zoom:80%;" />
 
 ##### 添加loader
 
