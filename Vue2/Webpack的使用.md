@@ -89,20 +89,6 @@ webpack中的代码都是以模块化来进行编写
 
   如`[ 'style-loader', 'css-loader' ]`
 
-### url-loader的使用
-
-* 当css引入图片时，需要添加并配置url-loader。
-
-* 图片文件字节小于limit时，会对图片进行base64编码，css中url通过base64编码显示
-
-* 如果图片大于limit时，则会提示安装file-loader。（limit默认=8kb）
-
-* 为了防止文件命名重复，还可以在options中配置文件hash值
-
-  ```js
-  name:'img/[name].[hash:8].[ext]'
-  ```
-
 ### file-loader的使用
 
 **url-loader和file-loader的配置文件只能使用一个**  
@@ -113,12 +99,6 @@ webpack中的代码都是以模块化来进行编写
 
 如果图片和html不在同一个文件夹，可以在webpack.config.js的output中设置`publicPath:'dist/'` 。
 就会默认引用该路径中的文件
-	
-<br>
-
-和url-loader的区别：  
-* 打包时file-loader会把图片进行哈希值命名并一起打包进dist文件夹中
-* url-loader只是作为base64字符串来使用，不需要存储单独文件
 
 > 开发中打包图片我们想要使用原来的名字，可以在options中自定义文件的名字
 
@@ -139,18 +119,53 @@ webpack中的代码都是以模块化来进行编写
 **最常用的placeholder：**
 
 * [ext]： 处理文件的扩展名；
-
 * [name]：处理文件的名称； 
-
 * [hash]：文件的内容，使用MD4的散列函数处理，生成的一个128位的hash值（32个十六进制）；
-
 * [contentHash]：在file-loader中和[hash]结果是一致的（在webpack的一些其他地方不一样，后面会讲到）；
-
 * [hash:]：截图hash的长度，默认32个字符太长了； 
-
 * [path]：文件相对于webpack配置文件的路径
 
+### url-loader的使用
+
+**url-loader和file-loader的配置文件只能使用一个**  
+
+安装：`npm install url-loader -D`
+
+* 当css引入图片时，需要添加并配置url-loader。
+
+* 图片文件字节小于limit时，会对图片进行base64编码，css中url通过base64编码显示
+
+* 如果图片大于limit时，则会提示安装file-loader。（limit默认=8kb）
+
+* 为了防止文件命名重复，还可以在options中配置文件hash值
+
+  ```js
+  {
+    test: /\.(png|jpe?g|gif|svg)$/i,
+      use:{
+        loader:"url-loader",
+          options:{
+            name:'img/[name]_[hash:8].[ext]',
+              limit:10 * 1024		// 只把10kb以下的图片进行base64b
+          }
+      }
+  }
+  ```
+
 <br>
+
+### file-loader和url-loader的区别
+
+* 打包时file-loader会把图片进行哈希值命名并一起打包进dist文件夹中
+* url-loader只是作为base64字符串来使用，不需要存储单独图片或其他格式的文件
+
+**使用url-loader的优缺点**
+
+**优点：**图片转成base64和打包文件一起加载，减少服务器的请求次数及服务器压力，达到更快的加载页面。
+
+**缺点：**当图片大小超过100kb时转成base64的文件大小也很大，这样将得不偿失
+
+**总结：**当图片小于100kb时使用`url-loader`，当大于100kb时使用`file-loader`
 
 ## babel => es6语法处理
 
@@ -220,7 +235,7 @@ npm install vue --save
 	
 3. 引用组件时必须写扩展名，我们也可以设置，使不写扩展名也可引用
 	
-		```js
+	```js
 	//在webpack.config中配置，和module同级
 		resolve:{
 		  //alias:别名。切换vue版本
@@ -233,8 +248,9 @@ npm install vue --save
 		}
 	```
 	
-	我们引用vue时直接写```import app from 'App'```即可
+	我们引用vue时直接写`import app from 'App'`即可
 	<br>
+
 ### vue文件封装处理
 
 1. 安装`vue-loader`和`template-compiler`
@@ -280,13 +296,12 @@ webpack中的插件，就是对webpack现有功能的各种扩展，比如打包
 
 2. 在`webpack.config.js`中的`plugins`中配置插件。
 	
-		```js
+	```js
 	//别忘记在头部引入
 		const webpack = require('webpack')
 	
 	//plugins。和module同级
 		plugins:[new webpack.BannerPlugin('这里是Vicer的版权')]
-	
 	```
 
 ### 打包html的plugin
@@ -376,10 +391,10 @@ npm install --save-dev webpack-dev-server@2.9.1
 在开发过程中，有的配置开发时用，有的配置生成时用，为了对应不同的时期我们可以做一个配置分离
 
 1. 在文件夹中把配置分离成三个文件，一个基础base，一个开发dev，一个生产prod。
+
 2. 安装webpack合并工具
 	
-		`npm install webpack-merge --save-dev`
-		//无需配置webpack.config文件,使用时导入即可
+	`npm install webpack-merge --save-dev`     //无需配置webpack.config文件,使用时导入即可
 	
 3. 导入webpack-merge和基础config文件，其他插件按需导入，然后进行合并
 ```javascript

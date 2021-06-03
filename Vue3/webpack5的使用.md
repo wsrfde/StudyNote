@@ -77,11 +77,13 @@ const path = require('path');
 module.exports = {
   entry: './src/index.js',  // 打包入口，默认为 ./src/index.js
   output: {									// 打包出口
-    filename: 'bundle.js',
+    filename: 'js/bundle.js',
     path: path.resolve(__dirname, 'dist')	// 当前文件的路径拼接上dist
   }
 };
 ```
+
+
 
 ### loader
 
@@ -193,5 +195,267 @@ rules:[
     ]
   },
 ]
+```
+
+#### asset module type
+
+> webpack5中已不再使用raw-loader 、url-loader、file-loader，使用asset module type代替
+
+**无需进行安装即可使用**
+
+资源模块类型：
+
+* `asset/resource` 发送一个单独的文件并导出 URL。之前通过使用 file-loader 实现； 
+
+* `asset/inline` 导出一个资源的 data URI。之前通过使用 url-loader 实现；
+
+* `asset/source` 导出资源的源代码。之前通过使用 raw-loader 实现； （不常用）
+
+* `asset` 在导出一个 data URI 和发送一个单独的文件之间自动选择。之前通过使用 url-loader，并且配置资源体 积限制实现
+
+
+
+##### 加载图片
+
+> 开发中我们加载图片一般常用的是`asset`类型
+
+```js
+rules:[
+  {
+    test: /\.(png|jpe?g|gif|svg)$/i,
+  	type: "asset",
+    generator:{
+      // 我们还可以使用placeholder进行命名文件  
+      filename: "img/[name]_[hash:8][ext]"	//wenpack5中ext自带了前面的小数点
+    },
+    parser:{
+      dataUrlCondition:{
+        maxSize: 10 * 1024	// 把10kb以下的图片进行生成base64，通过bundle.js一起传输过来。大于10kb则引入文件
+      }
+    }
+  }
+]
+```
+
+##### 加载字体
+
+```js
+rules：[
+  {
+    test: /\.(woff2?|eot|ttf)$/i,
+  	type: "asset/resource",
+    generator:{
+      filename: "font/[name]_[hash:8][ext]"	//wenpack5中ext自带了前面的小数点
+    }
+  }
+]
+```
+
+**最常用的placeholder：**
+
+* [ext]： 处理文件的扩展名；
+* [name]：处理文件的名称； 
+* [hash]：文件的内容，使用MD4的散列函数处理，生成的一个128位的hash值（32个十六进制）；
+* [contentHash]：在file-loader中和[hash]结果是一致的（在webpack的一些其他地方不一样，后面会讲到）；
+* [hash:]：截图hash的长度，默认32个字符太长了； 
+* [path]：文件相对于webpack配置文件的路径
+
+
+
+### plugin插件
+
+> 用于执行更加广泛的任务，比如打包优化、资源管理、环境变量注入等
+
+#### CleanWebpackPlugin
+
+功能：打包前删除dist文件夹
+
+安装：`npm install clean-webpack-plugin -D`
+
+```js
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+
+module.exports = {
+  plugins: [
+    new CleanWebpackPlugin()
+  ]
+}
+```
+
+#### HtmlWebpackPlugin
+
+功能：帮助我们在dist文件夹中生成index.html文件
+
+安装：`npm install html-webpack-plugin -D`
+
+```js
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+module.exports = {
+  plugins: [
+    new HtmlWebpackPlugin()
+  ]
+}
+```
+
+#### DefinePlugin
+
+功能：定义**自定义模板(index.html)**内的**EJS数据变量**，如语法`<% 变量 %>`
+
+安装：无需安装，webpack已经内置
+
+```js
+const {DefinePlugin} = require('webpack')
+
+const BASE_NAME = 'vicer'
+module.exports = {
+  plugins: [
+    new HtmlWebpackPlugin({
+      // 如果不想用插件自带的模板，我们还可以进行自定义，自定义的数据需要搭配 DefinePlugin插件来使用
+      template: './public/index.html',
+      title: 'webpack案例'	// <%= htmlWebpackPlugin.options.title %>
+    }),
+    new DefinePlugin({
+      BASE_NAME: 'BASE_NAME'  // 会自动找到上方定义的变量(vicer)，如果想直接使用字符串就在里面嵌套双引号	
+      BASE_URL: '"./"'	// <%= BASE_URL %>
+    })
+  ]
+}
+```
+
+```html
+<!-- ./public/index.html -->
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="">-->
+<!--  <head>-->
+<!--    <meta charset="utf-8">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--    <meta name="viewport" content="width=device-width,initial-scale=1.0">-->
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+<!--  </head>-->
+<!--  <body>-->
+<!--    <noscript>-->
+<!--      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>-->
+<!--    </noscript>-->
+<!--    <div id="app"></div>-->
+<!--    &lt;!&ndash; built files will be auto injected &ndash;&gt;-->
+<!--  </body>-->
+<!--</html>-->
+```
+
+#### CopyWebpackPlugin
+
+功能：将public的文件夹中其他文件复制到dist文件夹中
+
+安装：`npm install copy-webpack-plugin -D`
+
+```js
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+module.exports = {
+  plugins: [
+		new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: "public",
+          to: "./",	// 可以省略，会自动找到要打包的文件夹
+          globOptions: { 
+            ignore: [ // 需要忽略的文件
+              "**/index.html"	// 不需要复制，因为我们已经通过HtmlWebpackPlugin生成
+            ]
+          }
+        }
+      ]
+    })
+  ]
+}
+```
+
+### Mode配置
+
+> Mode配置选项，可以告知webpack使用响应模式的内置优化，不同的选项代表一个不同的配置集合
+
+可选值：`'none' | 'development' | 'production'` (默认：production)
+
+| 选项          | 描述                                                         |
+| :------------ | :----------------------------------------------------------- |
+| `development` | 会将 `DefinePlugin` 中 `process.env.NODE_ENV` 的值设置为 `development`. 为模块和 chunk 启用有效的名。 |
+| `production`  | 会将 `DefinePlugin` 中 `process.env.NODE_ENV` 的值设置为 `production`。为模块和 chunk 启用确定性的混淆名称，`FlagDependencyUsagePlugin`，`FlagIncludedChunksPlugin`，`ModuleConcatenationPlugin`，`NoEmitOnErrorsPlugin` 和 `TerserPlugin` 。 |
+| `none`        | 不使用任何默认优化选项                                       |
+
+### Devtool
+
+> 控制是否生成，以及如何生成 source map。
+
+source map的作用：生成资源地图，在打包之后的代码中可以正确的找到报错代码的位置
+
+`devloop:source-map`（默认为：`eval`）
+
+注意：生成`source-map`会占用一部分的空间及较慢的打包速度，生产模式中需要注释掉此代码
+
+### Babel
+
+> webpack打包的js文件中还存在es6语法，由于部分浏览器不支持es6，所以我们需要帮它转换成es5
+
+安装：	`npm i  babel-loader @babel/core -D`
+
+**当前使用版本：webpack 5.x | babel-loader 8.x | babel 7.x**
+
+注意：这样直接使用的话是转义是不用生效的，还需要安装各种插件，以达到我们想要的效果
+
+插件：
+
+把箭头函数转为普通函数：`plugin-transform-arrow-functions`
+
+把let/cont转为var：`plugin-transform-block-scoping`
+
+但这样使用babel一个个安装插件太麻烦，所以babel直接帮我们配置好了预设，根据预设来加载对应插件列表
+
+`npm install @babel/preset-env -D`
+
+**配置方法一：**
+
+```js
+// webpack.config.js
+rules:[
+  {
+  test: /\.js$/,
+    // 由于转义时会把所有引用的js一起转义，而node_modules不需要转义，所以需要进行排除处理
+    exclude: /(node_modules|bower_components)/,
+      use: {
+        loader: 'babel-loader',
+          options: {
+         // plugins: [
+         //   "@babel/plugin-transform-arrow-functions",
+         //   "@babel/plugin-transform-block-scoping",
+         // ]
+            presets: ['@babel/preset-env']
+          }
+      }
+	}
+]
+```
+
+**配置方法二：**
+
+```js
+// webpack.config.js
+rules:[
+  {
+     test: /\.js$/,
+     loader: "babel-loader"
+  }
+]
+```
+
+```js
+// babel.config.js
+module.exports = {
+  presets: [
+    "@babel/preset-env"
+  ]
+}
 ```
 
