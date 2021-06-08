@@ -132,9 +132,11 @@ rules:[
 
 > pPostCSS可以帮助我们进行一些CSS的转换和适配，比如自动添加浏览器前缀、css样式的重置，是一个通过JavaScript来转换样式的工具；
 
-安装PostCss和postcss-cli及postcss-loader：`npm install postcss postcss-cli postcss-loader -D`
+安装postcss和postcss处理插件：`npm install PostCss postcss-preset-env -D`
 
-因为postcss需要有对应的插件才会起效果，所以我们需要安装它的plugin：`npm install postcss-preset-env -D`
+安装对应的postcss-loader：`npm install postcss-loader -D`
+
+如果想直接在终端使用的话可以安装对应得cli，没有这个需求得话无需安装 ` npm i postcss-cli -D`
 
 postcss-preset-env插件作用：
 
@@ -347,7 +349,7 @@ module.exports = {
 
 #### CopyWebpackPlugin
 
-功能：将public的文件夹中其他文件复制到dist文件夹中
+功能：将public的文件夹中的文件（index.html除外）复制到dist文件夹中
 
 安装：`npm install copy-webpack-plugin -D`
 
@@ -459,3 +461,345 @@ module.exports = {
 }
 ```
 
+### Vue3的打包
+
+安装vue3：`npm i vue@next`
+
+#### vue各个版本区别
+
+* `vue(.runtime).global(.prod).js`
+
+  通过浏览器中的 `<script src="...">` 直接使用；  
+
+  我们之前通过CDN引入和下载的Vue版本就是这个版本；  
+
+  会暴露一个全局的Vue来使用；  
+
+* `vue(.runtime).esm-browser(.prod).js`
+
+  用于通过原生 ES 模块导入使用 (在浏览器中通过` <script type="module">` 来使用)。  
+
+* `vue(.runtime).esm-bundler.js  `
+
+  用于 webpack，rollup 和 parcel 等构建工具；  
+
+  构建工具中默认是vue.runtime.esm-bundler.js； 
+
+  如果我们需要解析模板template，那么需要手动指定vue.esm-bundler.js；  
+
+* `vue.cjs(.prod).js`  
+
+  服务器端渲染使用；  
+
+  通过require()在Node.js中使用；
+
+#### 运行时编译和仅运行时
+
+##### Vue开发的三种方式
+
+* **render函数**的方式，使用h函数来编写渲染的内容
+
+* **template模板**的方式（在createApp中写template）
+* 通过**.vue文件**中的template来编写模板
+
+##### 三种方式的处理方法
+
+* **render函数**的h函数可以直接返回一个虚拟节点
+
+* **template模板**要通过源码中一部分代码来进行编译
+
+* **.vue文件**中的template可以通过在**vue-loader**对其进行编译和处理
+
+
+
+**总结：**
+
+**runtime**版本的代码量更少，但是不支持对**template模板**的编译  （默认版本）
+
+**非runtime**版本的代码量更多，支持编译template
+
+所以在webpack中我们不想引用更大的版本包，还需要编译.vue文件，就需要用到vue-loader
+
+#### Vue-loader的使用
+
+安装支持Vue3的loader：`npm i vue-loader@next -D` 
+
+安装对`.vue`的解析：`npm i @vue/compiler-sfc -D`
+
+```js
+// vue 除了配置loader还需要搭配loader中的plugin来进行使用
+
+const { VueLoaderPlugin } = require('vue-loader');
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      }
+    ]
+  },
+  plugins: [
+    new VueLoaderPlugin()
+  ]
+}
+```
+
+#### 全局标识符的配置
+
+我们会发现控制台还有另外的一个警告：
+
+`You are running the esm-bundler build of Vue. It is recommended to configure your bundler to explicitly replace feature flag globals with boolean literals to get proper tree-shaking in the final bundle. See http://link.vuejs.org/feature-flags for more details.`
+
+打开[链接](http:/link.vuejs.org/feature-flags)中的文档，我们可以看到vue3中默认帮我们配置了两个选项
+
+* `__VUE_OPTIONS_API__` 是否支持vue2的api，默认为true
+* `__VUE_PROD_DEVTOOLS__`是否可以在生产模式中使用devtools，默认为false
+
+虽然vue3默认帮我们做了如下配置，但作者还是强烈建议我们进行手动配置
+
+```js
+// webpack.config.js
+
+// 使用DefinePlugin插件，进行全局变量的配置
+new DefinePlugin({
+  BASE_URL: "'./'",
+  __VUE_OPTIONS_API__: true,
+  __VUE_PROD_DEVTOOLS__: false
+}),
+```
+
+
+
+### webpack热更新
+
+> 每次我们编写代码后还需要重新编译，非常的麻烦，可以使用以下方法，当代码更新时，自动进行编译代码来进行实时调试
+
+#### 使用watch
+
+> 只要有一个发生了更新，那么代码将被重新编译
+
+```json
+// package.json
+"scripts": {
+ "watch": "webpack --watch"
+}
+```
+
+但是这个方法有一个缺点，只能重新编译代码，不能进行刷新页面
+
+#### 使用webpack-dev-server
+
+> 监听文件变化，并实时重新加载（live reloading）
+
+安装：`npm install webpack-dev-server -D`
+
+使用：
+
+```json
+// package.json
+"scripts": {
+ "serve": "webpack serve"  // 通过webpack-cli启动
+}
+```
+
+然后运行`npm run serve` 即可启动。
+
+**疑问： 为什么run serve的时候没有对文件进行实时打包然后再实时更新？**
+
+原理：因为webpack开启本地服务是启用了node的一个express服务器来进行开启，webpack的打包好的内容被放在了内存中，express直接去内存中去取即可。
+
+如果打包好了文件放在了dist文件夹中，express还需要去读取dist文件夹，然后再放在内存中引用，多了一个读取步骤，所以为了提高开发效率直接放在了内存中
+
+##### webpack-dev-server配置：contentBase
+
+> contentBase的作用：当webpack打包引用目录找不到资源时，就会来contentBase配置的文件夹下来寻找
+
+```js
+module.exports = {
+  devServer:{
+		contentBase: path.join(__dirname, 'public'),	// => ./public
+  }
+}
+```
+
+ **contentBase与CopyWebpackPlugin的区别**
+
+* contentBase：是直接引用文件夹的资源
+* CopyWebpackPlugin：把资源进行复制到dist文件夹中再进行引用
+
+总结：
+
+contentBase更适合在**开发中使用**，因为每次更改时还要进行复制文件，浪费时间
+
+CopyWebpackPlugin更适合**在生产中使用**，生产的时候还是要把资源打包进dist文件中去的
+
+##### webpack-dev-server配置：HMR
+
+> 模块热替换HMR（全称Hot Module Replacement）。模块热替换是指在：应用程序运行过程中，替换、添加、删除模块，而无需重新刷新整个页面
+
+优点：不重新加载整个页面，这样可以保留某些应用程序的状态不丢失
+
+警告：**HMR 绝对不能用在生产环境**
+
+不开启HMR的情况下，当我们修改了源代码之后，整个页面会自动刷新，使用的是live reloading；
+
+```js
+module.exports = {
+  target: "web",	// 使用HMR的时候要指定哪个模块，如（node/web），不然会有一些问题 
+  devServer:{
+		hot: true
+  }
+}
+```
+
+当我们配置好`hot:true`的时候，**会自动进行`.vue`文件的模块热替换**，如果想热替换其他文件，需配置以下代码
+
+**单个文件模块热替换**
+
+```js
+import './js/elemet'
+
+if(module.hot){
+  module.hot.accept('./js/elemet',()=>{
+    console.log('elemet模块更新了')
+  })
+}
+```
+
+##### webpack-dev-server配置：host、port、open、compress
+
+默认devServer访问的是本地IP，默认是localhost本地域名，会被解析成127.0.0.1。
+
+当我们希望在同一网段下的主机访问我么的网页时，可以设置为自己的IPv4 地址，并配置默认端口号80
+
+```js
+module.exports = {
+  devServer: {
+    host: '192.168.1.109',	//设置主机地址
+    port: 80,								//设置端口号
+    open:true,							//是否打开浏览器，默认false
+		compress:true						//为静态文件开启gzip,默认为false（没必要开启，本地访问的速度已经够快，开启gzip后浏览器还要解压）
+  },
+}
+```
+
+##### webpack-dev-server配置：proxy
+
+> 当我们开发过程中出现跨域问题时，除了后端解决之外前端也可以解决（但上线后必须由后端解决）
+
+我们可以把**请求先发送到代理服务器，然后由代理服务器发送请求和数据**，以解决跨域问题
+
+
+
+**模拟跨域场景：端口号不同**
+
+本地启动地址：`http://localhost:80`
+
+API请求地址：`http://localhost:8888/list`
+
+```js
+module.exports = {
+  devServer: {
+		proxy: {
+  		// "/api":"http://localhost:8888",   
+      //这样直接设置是有缺点的，当我们使用axios请求“/api/list”数据时，会把API地址改为http://localhost:8888/api/list，但我们上面的请求没有‘api’字段，所以需要重写path地址
+      "/api": {
+        target: "http://localhost:8888",
+        pathRewrite: {
+          "^/api": ""
+        },
+        secure: false,		//默认情况下不接收转发到https的服务器上，如果希望则设置为false
+        changeOrigin: true,	//如果后端设置了防止爬虫（即header上的host地址与本地相同才能请求），我们想要避免后端这个设置，把changeOrigin设置为true即可
+        historyApiFallback:true // 当我们在vue中使用history模式，路由跳转后刷新页面会出现404，为了避免这个行为，我们可以设置historyApiFallback为true，当发生404时，自动返回index.html
+      }
+    }
+  },
+}
+```
+
+```js
+//把'/api'替换为http://localhost:8888，这样我们请求则为正确的请求地址：http://localhost:8888/list
+axios.get("/api/list").then(res => {  
+  console.log(res);
+})
+```
+
+### resolve模块解析
+
+> 在webpack中我们引入模块，其实来自自己的代码和第三方库，但webpack怎么知道我们引用的是哪个模块呢，答案就是通过resolv模块解析
+
+#### 路径解析
+
+* 绝对路径：已经获得该文件的绝对路径，无需解析
+* 相对路径：通过import/require的文件所在目录，定义为上下文目录，根据import/require给出的相对路径，拼接上下文形成绝对路径
+* 模块路径：在`resolve.modules`中指定模块检索目录，默认值是` ['node_modules']`
+
+#### 文件扩展名
+
+> webpack会判断当前引用路径是文件or文件夹
+
+* 文件：是否有扩展名，没有则根据`resolve.extensions`进行填充
+
+  ```js
+  module.exports = {
+      resolve: {
+        extensions:[".js", ".json", ".mjs", ".vue", ".ts", ".jsx", ".tsx"],// 默认只包括数组前3个值
+      }
+  }
+  ```
+
+* 文件夹：在文件夹中根据`resolve.mainFiles`查找引用文件，默认是`['index']`，再根据`resolve.extensions`来解析文件扩展名
+
+#### 别名配置
+
+> 当我们项目的目录结构比较深的时候，可以使用别名来引用资源
+
+```js
+module.exports = {
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+        "js": path.resolve(__dirname, "./src/js")
+      }
+    }
+}
+```
+
+### 配置分离
+
+> 配置分离非常的简单，当我们需要根据不同的环境选择对应的配置的时候，可以进行如下操作
+
+```json
+// package.json
+"scripts": {
+  "build": "webpack --config ./config/webpack.prod.config.js",
+  "serve": "webpack serve --config ./config/webpack.dev.config.js"
+},
+```
+
+如果想把公共配置抽理出到单独的文件，并在其他文件引用，需要用到`webpack-merge`这个插件
+
+```js
+// config/webpack.dev.config.js   or   config/webpack.prod.config.js
+const { merge } = require('webpack-merge');
+const commonConfig = require('./webpack.comm.config');
+
+module.exports = merge(commonConfig, {
+  //开发或生产时的配置
+}
+```
+
+注意：如果文件放在config文件夹下时，引用路径要多向上查找一层，即`../`，同时改变webpack的上下文
+
+```js
+module.exports = {
+  context:path.resolve(__dirname,"./"),
+  entry:"../src/index.js"
+}
+```
+
+
+
+ 

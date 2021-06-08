@@ -1,6 +1,37 @@
-> vue cli4声称0配置，但在实际开发中做到0配置显然还是有些夸夸其谈，这里是自己根据官方文档及自己一些实战总结，记成博客，以备不时之需
+## Vue Cli脚手架
 
+> vue cli4声称0配置，虽然帮我们配置了很多东西，但在实际开发中还是要做一些自己的配置，这里是自己根据官方文档及自己一些实战总结，记成博客，以备不时之需
 
+### 安装及使用
+
+安装：`npm i @vue/cli -g`
+
+使用：`vue create 项目名称`
+
+创建流程：Enter确认下一步，空格键确认选中（自己根据项目需要选择即可）
+
+<img src="D:\Vicer\link\study-note\Vue2\img\cli4\cli创建项目的过程.png" alt="image-20210606185335719" style="zoom: 80%;" />
+
+创建完成目录文件介绍：
+
+`.browserslistrc`：适配的目标浏览器，如果想要查看配置，可以在github中搜文件名（一般默认即可）
+
+`.gitignore`：github提交代码时需要忽略的文件
+
+### webpack源码
+
+> 我们会好奇，在cli中已经帮我们配置好了那么多loader等配置，那么这些配置都在哪里呢
+
+在`node_modules/@vue/cli-service/lib/Service.js`，在该文件中定义了一个变量`builtInPlugins`
+
+变量中定义了`['./config/base','./config/css','./config/prod','./config/app']`
+
+也就是说把这些文件中的基础配置marge到一起，最后形成cli中所描述的0配置。
+
+##### 查看配置
+
+1. 在命令行中运行`vue ui`
+2. 在任务选项卡中，点击**inspect**（检查webpack 配置），并运行，即可查看当前项目的webpack的配置
 
 ### vue.config.js文件配置
 
