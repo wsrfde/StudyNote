@@ -176,6 +176,45 @@ mounted () {
 
 **inheritAttrs**
 
-是否继承从父级传递过来的属性，并在子组件根元素上显示，默认为true
+> 首先我们在使用inheritAttrs属性之前要了解一个属性：非Prop的Attribute
 
-（如果根元素没有相同key的属性，就不用在意此选项。因为无论true or false，都能在this.$attrs中获取到传递的属性）
+**非Prop的Attribute：当我们给某个组件传递属性，该属性并没有定义对应的props或emits时，就被称为非Prop的Attribute**
+
+例如：`class、style、id`等属性
+
+
+
+**使用inheritAttrs：**
+
+当子组件`有单个根节点`时，`非Prop的Attribute将自动添加到根节点的Attribute中`
+
+当我们不希望组件的根元素继承attribute，可以在组件中设置 `inheritAttrs: false`
+
+例如：需要将attribute应用于根元素之外的其他元素；
+
+```vue
+// App.vue 
+<template>
+  <child-comp :name="name" data-num="123" id="childComp"></child-comp>		
+</template>
+```
+
+```vue
+// ChildComp.vue
+<template>
+  <div>		<!-- 非Prop属性：data-num="123" id="childComp"  -->
+    <h2 :id="$attrs.id">{{name}}</h2>  <!-- 结果： <h2 id="childComp"></h2> -->
+    <!-- 或者 -->
+    <h2 v-bind="$attrs">{{name}}</h2>  <!-- 结果： <h2 data-num="123" id="childComp"></h2> -->
+  </div>		
+</template>
+
+<script>
+export default {
+  name: "ChildComp",
+  inheritAttrs: false,		// 别忘记禁用
+  props:['name']
+}
+</script>
+```
+
