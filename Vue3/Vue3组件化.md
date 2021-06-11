@@ -333,5 +333,49 @@ export default {
 </script>
 ```
 
+#### 全局事件总线mitt库
 
+> Vue3从实例中移除了 $on、$off 和 $once 方法，所以我们如果希望继续使用全局事件总线，要通过第三方的库
+
+Vue3官方有推荐一些库，例如 mitt
+
+安装：`npm i mitt`
+
+封装工具：方便我们在每个组件中引用
+
+```js
+// eventbus.js
+import mitt from 'mitt';
+
+const emitter = mitt();
+// export const emitter1 = mitt();   //为了防止多个事件总线冲突，我们可以单独命名自己的事件总线
+
+export default emitter;
+```
+
+使用：
+
+```js
+// 发射事件总线
+import emitter from './utils/eventbus';
+
+btnClick() {
+   emitter.emit("why", {name: "why", age: 18});
+}
+```
+
+```js
+// 接收事件总线
+import emitter from './utils/eventbus';
+created() {
+  // 接收单一事件总线
+  emitter.on("why", (info) => {
+    console.log("why:", info);
+  });
+	// 接收全部事件总线
+  emitter.on("*", (type, info) => {
+    console.log("* listener:", type, info);
+  })
+}
+```
 
