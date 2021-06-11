@@ -93,13 +93,13 @@ history.go指跳转到指定页面
 		
 	```js
 	const routes = [
-		  {
-			//路由路径
-			path:'/home',
-			//映射组件
-			component:Home
-		  }
-		]
+	    {
+	        //路由路径
+	        path:'/home',
+	        //映射组件
+	        component:Home
+	    }
+	]
 	```
 	
 	
@@ -325,8 +325,11 @@ if(this.$route.path != this.path){
 * 传递的方式: path和query以对象方式传递  
 		
 	1. 使用route-link标签的属性
-	   `<router-link :to="{path:'/profile/'+123,query:{name:'vicer',age:18}}">档案</router-link>`
-	
+	   
+	   ```html
+	   <router-link :to="{path:'/profile/'+123,query:{name:'vicer',age:18}}">档案</router-link>
+	   ```
+	   
 	2. 或者使用函数方式
 	
 	   **注意：query中不能使用this。可以保存进变量传入** 
