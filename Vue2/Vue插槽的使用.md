@@ -10,24 +10,37 @@
 
 **使用方法：**
 
-1. 直接在template中插入slot空标签，即可在自定义标签中插入内容，内容会自动替换空slot		
-	```html
-	<template>
-	  <div>
-	    <slot></slot>
-	  </div>
-	</template>
-	```
-	
-2. 组件标签中插入的无论插入多少值，都会一起作为替换元素替换slot
+直接在需要使用的位置中插入slot标签，即可在使用自定义组件中插入内容，内容会自动替换空slot		
 
-3. 如果在slot中添加默认值，组件标签中没有插入内容则显示默认值
+```vue
+// App.vue
+<template>
+	<slot-comp>
+  	<h2>我是插入的内容</h2>
+  </slot-comp>	
+</template>
+```
 
-    ```html
-    <slot><b>默认显示我</b></slot>
-    ```
+```vue
+// slotComp.vue
+<template>
+  <div>
+    <slot></slot> 	<!-- <h2>我是插入的内容</h2> -->
+  </div>
+</template>
+```
 
-    
+**注意：组件标签中插入的无论插入多少值，都会一起作为替换元素替换slot**
+
+**插槽默认值：**
+
+> 当组件中没有插入任何元素，那么slot便会默认为其展示默认值（已设置默认值的前提下）
+
+```html
+<slot><b>默认显示我</b></slot>
+```
+
+
 
 <br>
 

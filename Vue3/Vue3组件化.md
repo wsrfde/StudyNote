@@ -36,8 +36,8 @@ app.mount('#app');
 ```vue
 // App.vue 
 <template>
-  <child-comp :name="info.name"></child-comp>		 <!-- vicer -->
-  <child-comp v-bind="info"></child-comp>				 <!-- vicer -->
+  <child-comp :name="info.name"></child-comp>		 <!-- => vicer -->
+  <child-comp v-bind="info"></child-comp>				 <!-- => vicer -->
 </template>
 
 <script>
@@ -167,9 +167,9 @@ export default {
 // ChildComp.vue
 <template>
   <div>		<!-- 非Prop属性：data-num="123" id="childComp"  -->
-    <h2 :id="$attrs.id">{{name}}</h2>  <!-- 结果： <h2 id="childComp"></h2> -->
+    <h2 :id="$attrs.id">{{name}}</h2>  <!-- => <h2 id="childComp"></h2> -->
     <!-- 或者 -->
-    <h2 v-bind="$attrs">{{name}}</h2>  <!-- 结果： <h2 data-num="123" id="childComp"></h2> -->
+    <h2 v-bind="$attrs">{{name}}</h2>  <!-- => <h2 data-num="123" id="childComp"></h2> -->
   </div>		
 </template>
 
@@ -192,7 +192,7 @@ export default {
 // ChildComp.vue
 <template>
 		<!-- 非Prop属性：data-num="123" id="childComp"  -->
-    <h2 :id="$attrs.id">{{name}}</h2>  <!-- 结果： <h2 id="childComp"></h2> -->
+    <h2 :id="$attrs.id">{{name}}</h2>  <!-- => <h2 id="childComp"></h2> -->
     <h2>{{name}}</h2>  
     <h2>{{name}}</h2>  
 </template>
@@ -277,7 +277,7 @@ export default {
 ```vue
 // ChildComp.vue
 <template>
-  <div>{{name}}-{{age}}-{{length}}</div>		<!-- 结果：vicer-18-3 -->
+  <div>{{name}}-{{age}}-{{length}}</div>		<!-- => vicer-18-3 -->
 </template>
 
 <script>
@@ -322,7 +322,7 @@ export default {
 // ChildComp.vue
 <template>
 	<!-- length通过computed返回了ref对象，所以需要取出里面得value -->
-  <div>{{name}}-{{age}}-{{length.length}}</div>		<!-- 结果：vicer-18-4 -->
+  <div>{{name}}-{{age}}-{{length.length}}</div>		<!-- =vicer-18-4 -->
 </template>
 
 <script>
