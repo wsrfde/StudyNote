@@ -155,7 +155,7 @@ export default {
 </script>
 ```
 
-![image-20210609091102461](D:\Vicer\link\study-note\Vue3\img\not-props.png)
+![image-20210609091102461](D:\Vicer\link\study-note\Vue3\img\vue3-comp\not-props.png)
 
 ##### 禁用Attribute继承
 
@@ -377,5 +377,364 @@ created() {
     console.log("* listener:", type, info);
   })
 }
+```
+
+### 动态组件
+
+> 当我们实现点击tab切换页面，有三种切换方式
+
+切换方式：
+
+1. 使用`v-if`显示不同的组件
+
+2. 是使用 `component `组件，通过一个特殊的attribute `is` 来实现
+3. 通过路由跳转
+
+
+
+如果我们组件内容相似度高，但又需要不同的组件来进行展示时，这是我们可以使用第二种方法，**动态组件**
+
+```vue
+// App.vue
+<template>
+  <div>
+    <template v-for="tab in tabs" :key="tab">
+      <button @click="currentTab = tab">{{tab}}</button>
+    </template>
+    <div>
+      当前页面：
+      <!-- 通过is，动态赋值组件名。和其他组件一样，可以传递属性 -->
+      <component :is="currentTab" :currentTab="currentTab"></component>	
+    </div>
+  </div>
+</template>
+
+<script>
+import Mall from "./mall";
+import Shop from "./shop";
+import Cart from "./cart";
+export default {
+  name: "App",
+  components: {Cart, Shop, Mall},
+  data(){
+    return {
+      tabs:['mall','shop','cart'],
+      currentTab:'mall'
+    }
+  },
+}
+</script>
+```
+
+注意：
+
+1. 无论是使用切换方式1或2，切换时都会触发组件的生命周期
+
+2. 使用`component`时，必须是已经注册的组件
+
+### keep-alive 缓存组件
+
+> 当我们切换组建后，希望某个组件不被销毁，继续保存原来的属性，就可以用到keep-alive
+
+**基本使用：**
+
+```vue
+<keep-alive>  
+  <component :is="currentTab"></component>	
+</keep-alive>
+```
+
+**keep-alive的属性**
+
+* `include ` - string | RegExp | Array。只有名称匹配的组件会被缓 存； 
+
+* `exclude ` - string | RegExp | Array。任何名称匹配的组件都不 会被缓存； 
+
+* `max ` - number | string。最多可以缓存多少组件实例，一旦达 到这个数字，那么缓存组件中最近没有被访问的实例会被销毁；
+
+```vue
+<!-- string ,多个组件可以用(英文逗号)分隔 -->
+<keep-alive include='mall,shop'>  
+  <component :is="currentTab"></component>	
+</keep-alive>
+
+<!-- RegExp  ,记得使用v-bind -->
+<keep-alive :include='/mall|shop/'>  
+  <component :is="currentTab"></component>	
+</keep-alive>
+
+<!-- Array ,记得使用v-bind -->
+<keep-alive :include="['mall','shop']">  
+  <component :is="currentTab"></component>	
+</keep-alive>
+```
+
+**注意：keep-alive属性匹配的是组件的name属性，而非vue文件名称**
+
+#### keep-alive的生命周期
+
+keep-alive不会执行created或者mounted等生命周期函数
+
+如果想要监听组件的当前状态可以使用`activated `和 `deactivated`的生命周期钩子函数
+
+
+
+### 异步组件
+
+> 在了解异步组件之前，我们先看一下webpack的代码分包
+
+#### webpack的代码分包
+
+> 因为组件和组件之间是通过模块化直接依赖的，那么webpack在打包时就会将组 件模块打包到一起（比如一个app.js文件中）,这个时候随着项目的不断庞大，app.js文件的内容过大，会造成首屏的渲染速度变慢
+
+对于一些不需要立即使用的组件，我们可以单独对它们进行拆分，拆分成一些小的代码块chunk.js
+
+```js
+// import {sum} from "./math";   // 正常使用，会和app.js打包到一起
+
+import('./math').then(res =>{		// 分包加载
+  console.log(res.sum(2,3))
+})
+```
+
+再次打包时，我们会发现dist文件夹中多了一个chunk.js文件，里面打包的便是sum函数
+
+#### Vue异步组件
+
+> 对于组件我们也希望通过异步的方式来进行加载（目的是可以对其进行分包处理），那么Vue中给我们提供了一个函数：defineAsyncComponent。
+
+`defineAsyncComponent`的使用方法
+
+* 使用工厂函数
+
+  ```vue
+  <script>
+  // import AsyncComp from './AsyncComp.vue';		
+    
+  import { defineAsyncComponent } from 'vue';
+  // defineAsyncComponent自动帮我们把组件在then中回调并return出去
+  const AsyncComp = defineAsyncComponent(() => import("./AsyncComp.vue"))	
+  
+  export default {
+    components: {
+      AsyncComp,
+    }
+  }
+  </script>
+  ```
+
+* 对象配置
+
+  ```vue
+  <script>
+  import { defineAsyncComponent } from 'vue';
+  
+  // import AsyncComp from './AsyncComp.vue';
+  const AsyncComp = defineAsyncComponent({
+    loader: () => import("./AsyncComp.vue"),
+    loadingComponent: Loading,	// 等待过程的loading
+  	//errorComponent,	// 加载失败时要使用的组件，使用的很少
+    delay: 2000,			// 在显示loadingComponent组件之前, 等待多长时间
+    /**
+     * err: 错误信息,
+     * retry: 函数, 调用retry尝试重新加载
+     * fail ：函数，调用时当前加载程序结束退出
+     * attempts: 记录尝试的次数
+     */
+    onError: function(err, retry,fail, attempts) {}
+  })
+  
+  export default {
+    components: {
+      AsyncComp,
+    }
+  }
+  </script>
+  ```
+
+  更多对象配置请查看[官网](https://v3.cn.vuejs.org/api/global-api.html#definecomponent)，一般开发中更多使用工厂函数的方式
+
+#### Suspense
+
+> Suspense悬疑的意思，目前（2021-6-13）是一个实验特性，可能随时会更改
+
+Suspense是一个内置的全局组件，该组件有两个插槽： 
+
+* default：如果default可以显示，那么显示default的内容； 
+
+* fallback：如果default无法显示，那么会显示fallback插槽的内容；
+
+```vue
+<template>
+  <div>
+    <suspense>
+      <template #default>	<!-- 如果default中的组件不能展示，则展示fallback的组件，但是如果可以展示了，则展示default的组件 -->
+        <async-category></async-category>
+      </template>
+      <template #fallback> <!-- 也就是说fallback相当于一个占位组件 -->
+        <loading></loading>
+      </template>
+    </suspense>
+  </div>
+</template>
+```
+
+### 组件访问方式
+
+#### $refs的使用
+
+> 直接获取到元素对象或者子组件实例
+
+```vue
+<childComp ref="childComp"></childComp>
+
+<script>
+created(){
+ console.log(this.$refs.childComp)  // 得到当前组件的所有data，methods等所有属性
+}
+</script>
+```
+
+注意：  
+
+* ref如果绑定在组件中，那么获取到的是组件对象
+* ref如果绑定到普通元素中，那么获取到是元素对象
+
+##### $el
+
+> 获取组件中的html元素
+
+```js
+console.log(this.$refs.childComp.$el)  // 得到当前组件的元素
+```
+
+#### $root
+
+直接访问根组件，也就是vue实例
+
+#### $parent
+
+* 类似js操作Dom中的parent，实际开发用的很少
+* 子组件应该尽量避免直接访问父组件的数据，因为这样耦合度太高了。
+
+**注意： Vue3已移除$children属性**
+
+
+
+### 组件的生命周期
+
+> Vue3的组件销毁更名为卸载，钩子名称改为beforeUnmount和unmounted
+
+生命周期：事务从诞生到消亡的整个过程  
+以下是生命周期函数，可以在某个周期做某件事
+
+```js
+[
+	'beforeCreate',
+	'created',		//组件创建完成
+	'beforeMount',
+	'mounted',		//DOM树创建完成
+	'beforeUpdate',	//数据更新前   可以更改数据
+	'updated',		//DOM更新完成   最好不要在这里改数据，会发生死循环
+	'beforeUnmount',	//事件的移除  清空定时器
+	'unmounted',	//手动移除组件或路由切换，会发生视图改变
+	'activated',	//钩子函数，需要作用keep-alive下。当前组件活跃状态
+	'deactivated',	//钩子函数，需要作用keep-alive下。当前组件活跃状态t
+  ]
+```
+
+### 组件的v-model
+
+> 我们都知道v-model的作用，value和data的双向绑定，那么如果我们现在把input封装成组件如何使用v-model呢
+
+基本使用：
+
+```vue
+// App.vue
+<template>
+  <div>
+    <p>msg:{{ msg }} </p>
+    <child-comp v-model="msg"></child-comp>	<!-- v-model默认传递的是modelValue属性 -->
+    <!-- 上方的v-model等同于👇的写法 -->
+    <!-- <child-comp :model-value="msg" @update:modelValue="msg = $event"></child-comp> -->
+  </div>
+</template>
+```
+
+```vue
+// ChildComp
+<template>
+  <div>
+    <input type="text" v-model="inputValue">
+  </div>
+</template>
+
+<script>
+export default {
+  name: "childComp",
+  props:{
+    modelValue:{  // v-model默认传递的是modelValue属性 
+      type:String
+    },
+  },
+  emits:['update:modelValue'],
+  computed:{
+    inputValue:{
+      set(val){
+        this.$emit('update:modelValue',val)
+      },
+      get(){
+        return this.modelValue
+      }
+    }
+  },
+}
+</script>
+```
+
+#### v-model绑定多个属性
+
+> 当我们希望给v-model绑定多个属性时，可以给v-model传递一个参数，这个参数名就是我们绑定的属性名称（v-model默认传递的是modelValue属性）
+
+绑定属性名name：`v-model:name="name"`
+
+```vue
+// App.vue
+<template>
+  <div>
+    <p>msg:{{ msg }} </p>
+    <p>name:{{ name }}</p>
+    <child-comp v-model="msg" v-model:name="name"></child-comp>
+  </div>
+</template>
+```
+
+```vue
+// ChildComp
+<template>
+	<div>
+    <button @click="changeName">按钮</button>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "childComp",
+  props:{
+    modelValue:{
+      type:String
+    },
+    name:{
+      type:String
+    }
+  },
+  emits:['update:modelValue','update:name'],
+  methods:{
+    changeName(){
+      this.$emit('update:name','Viceroy')
+    }
+  }
+}
+</script>
 ```
 
