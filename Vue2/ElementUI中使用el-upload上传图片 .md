@@ -12,7 +12,7 @@
 
 **踩坑记录：**
 
-坑1：如果使用`http-request`的方法上传，则`action`必须留个空格，不然去掉会报错
+坑1：如果使用el-upload的`http-request`方法上传，则`action`必须留个空格，不然去掉会报错
 
 坑2：要在`before-upload`中校验格式和大小，`on-change`中校验type会失败
 
@@ -65,7 +65,8 @@ changeFile(file) {	//由于只上传一个图片，所以上传一次会替换�
 },
 _updateAvatar(file) {
     const formData = new FormData()
-    formData.append('img', file.file)
+    // 这里后端定义字段名为img，如果还需要传id等参数继续append即可，如formData.append('id', '12345')
+    formData.append('img', file.file)	
     updateAvatar(formData).then((res) => {
         console.log(res)
     })
@@ -76,14 +77,14 @@ _updateAvatar(file) {
 // api
 import request from '@/utils/request'
 
-export function updateAvatar(data) {
+export function updateAvatar(formData) {
   return request({
     url: '/user/avatar',
     method: 'patch',
-    headers: {
-      'content-type': 'multipart/form-data;',
+    headers: {	// headers不用变
+      'content-type': 'multipart/form-data',
     },
-    data,	// 我们后端设置字段为img，有的公司则设置file。自己在formData中append进去
+    data: formData,	// 注意，根据method选择data或者params。并且这里直接传入formData对象
   })
 }
 ```

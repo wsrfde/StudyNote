@@ -14,7 +14,7 @@ transition组件提供了以下处理方式：
 
 ##### 过渡动画class
 
-![](D:\Vicer\link\study-note\Vue3\img\vue3-animate\animate原理.png)
+![](.\img\vue3-animate\animate原理.png)
 
 **进入动画钩子：**
 
@@ -241,6 +241,32 @@ export default {
 
 他们的优先级高于普通的类名，这对于 Vue 的过渡系统和其他第三方 CSS 动画库，如 [Animate.css](https://daneden.github.io/animate.css/).
 
+```html
+<!-- 使用方法： -->
+<transition enter-from-class="custom-class">
+```
+
+#### JavaScript钩子
+
+> 除了CSS钩子回调，transition组件给我们提供了JavaScript钩子方法
+
+```html
+<transition
+  @before-enter="beforeEnter"		//进入之前
+  @enter="enter"					//进入动画
+  @after-enter="afterEnter"			//进入动画之后
+  @enter-cancelled="enterCancelled" //取消动画
+  @before-leave="beforeLeave"
+  @leave="leave"
+  @after-leave="afterLeave"
+  @leave-cancelled="leaveCancelled"
+  :css="false"				//添加:css="false"，跳过 CSS 的检测，避免过渡过程CSS规则的影响
+>
+</transition>
+```
+
+当我们需要动态改变CSS的属性值时，推荐只用JavaScript钩子。响应的JS钩子动画库为Gsap库，该库又依赖GreenSock平台，所以如需使用该库可上[GreenSock平台](https://greensock.com/docs/v3/Installation)查看文档即可
+
 #### 第三方动画库
 
 ##### Animate.css
@@ -297,7 +323,7 @@ import "animate.css"
 
 点击animate.css官网中，动画名右侧的复制按钮
 
-![image-20210614185411703](D:\Vicer\link\study-note\Vue3\img\vue3-animate\animate.css.png)
+![image-20210614185411703](.\img\vue3-animate\animate.css.png)
 
 将复制好的类名，添加进transition组件的自定义过渡class中
 
@@ -320,5 +346,25 @@ import "animate.css"
   animation-direction: reverse;  /* 设置动画的反转 */
 }
 </style>
+```
+
+##### Gsap库
+
+> 当我们需要动态改变CSS的动画属性时，推荐使用JS钩子和Gsap库一起使用
+
+[Gsap库文档](https://greensock.com/docs/v3/GSAP/gsap.from())
+
+安装引用：
+
+```cmd
+# 安装gsap
+npm install gsap
+# 引用gsap
+import { gsap } from "gsap";
+# 引用对应插件（如果不用插件则无需引用和注册插件）
+import { PixiPlugin } from "gsap/PixiPlugin.js";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin.js";
+# 注册插件
+gsap.registerPlugin(PixiPlugin, MotionPathPlugin);
 ```
 

@@ -155,7 +155,7 @@ export default {
 </script>
 ```
 
-![image-20210609091102461](D:\Vicer\link\study-note\Vue3\img\vue3-comp\not-props.png)
+![image-20210609091102461](.\img\vue3-comp\not-props.png)
 
 ##### 禁用Attribute继承
 
