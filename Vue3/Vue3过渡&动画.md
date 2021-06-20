@@ -1,6 +1,8 @@
-### Vue3过渡&动画
+## Vue3过渡&动画
 
 > 没有动画的情况下，整个内容的显示和隐藏会非常的生硬。可以给单元素或者组件实现过渡动画，可以使用 transition 内置组件来完成动画；
+
+### Transition
 
 #### Transition组件的原理
 
@@ -36,7 +38,7 @@ transition组件提供了以下处理方式：
 
 * 如果transition没有name，则的class以 `v- `作为默认前缀
 
-* 如果有name属性，比如 `<transtion name="why">`，那么所有的class会以 `why-` 开头；
+* 如果有name属性，比如 `<transtion name="why">`，那么所有的class会以 `why-` 开头（如`why-enter-from`）；
 
 #### 基础Transition案例
 
@@ -348,11 +350,22 @@ import "animate.css"
 </style>
 ```
 
-##### Gsap库
+##### GSAP库
 
 > 当我们需要动态改变CSS的动画属性时，推荐使用JS钩子和Gsap库一起使用
 
-[Gsap库文档](https://greensock.com/docs/v3/GSAP/gsap.from())
+GSAP可以使下面的所有内容动画化：
+
+- **CSS**: 2D 和 3D transforms（如下方缩写表）, colors, `width`, `opacity`, `border-radius`, `margin`, 以及几乎所有的CSS值。
+- **SVG attributes**: `viewBox`, `width`, `height`, `fill`, `stroke`, `cx`, `r`, `opacity`, etc. 插件像[MorphSVG]和[DrawSVG]可以用于高级效果。
+
+- **Any numeric value** 例如，一个被渲染为`<canvas>`的对象。动画的摄像机位置在3D场景或滤镜的值。GSAP经常与Three.js和Pixi.js一起使用
+
+###### 2D和3D transforms属性缩写表
+
+> 只有transforms属性缩写即可，其他css属性正常使用无缩写
+
+<img src="./img/vue3-animate/transforms 属性缩写表.png" style="zoom:67%;" />
 
 安装引用：
 
@@ -364,7 +377,248 @@ import { gsap } from "gsap";
 # 引用对应插件（如果不用插件则无需引用和注册插件）
 import { PixiPlugin } from "gsap/PixiPlugin.js";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin.js";
-# 注册插件
+# 注册插件（如果不用插件则无需引用和注册插件）
 gsap.registerPlugin(PixiPlugin, MotionPathPlugin);
+```
+
+使用示例：
+
+[GSAP库文档](https://greensock.com/docs/v3/GSAP/gsap.from())
+
+GSAP库中一般常用得是两个方法：
+
+* `gsap.from()` 从隐藏到显示得初始动画值
+* `gsap.to()` 从显示到隐藏得目标动画值
+
+###### 案例一：标签的隐藏与展示
+
+```vue
+<template>
+  <div>
+    <button @click="isShow = !isShow">按钮</button>
+    <transition mode="out-in"
+                @enter="enter"
+                @leave="leave"
+    >
+      <p v-if="isShow" class="demo">我是节点</p>
+      <p v-else class="demo">我是另一个节点</p>
+    </transition>
+  </div>
+</template>
+
+<script>
+import {gsap} from 'gsap'
+
+export default {
+  name: 'App',
+  components: {},
+  data() {
+    return {
+      isShow: true
+    }
+  },
+  methods: {
+    enter(el, done) {
+      gsap.from(el, {
+        opacity: 0,			// css属性
+        x: -100,				// transforms属性缩写
+        duration: 1,		// gsap.from()API，动画执行时长
+        onComplete: done 	// gsap.from()API，动画完成时要调用的函数
+      });
+    },
+    leave(el, done) {
+      gxsap.to(el, {
+        opacity: 0,	
+        x: 100,
+        duration: 1,
+        onComplete: done
+      });
+    }
+  }
+}
+</script>
+
+<style>
+.demo {
+  margin: 100px auto;
+  width: 200px;
+  background: #ccc;
+}
+</style>
+```
+
+###### 案例二：动画计数器
+
+> 除了定义css属性动画，`gsap.from()`和`gsap.to()`还可以自定义目标值
+
+```vue
+<template>
+  <div>
+    <input type="number" step="200" v-model="count">
+    <h2>{{ newNumber.toFixed(0) }}</h2>
+  </div>
+</template>
+
+<script>
+import {gsap} from 'gsap'
+
+export default {
+  name: 'App',
+  data() {
+    return {
+      count: 0,
+      newNumber: 0
+    }
+  },
+  watch: {
+    count(val) {
+      gsap.to(this, {
+        newNumber: val,	// 给目标值赋值,如赋值String，Number，对象的引用等。赋值成功后可以如往常一样引用
+        duration: 1			// gsap.to()API，动画执行时长
+      })
+    }
+  }
+}
+</script>
+```
+
+### Transition-group
+
+> 当我们需要增加的动画状态不止一个，需要过渡整个列表的动画时，则需要用到Transition-group
+
+**Transition-group的Attribute：**
+
+* `tag`：如果想给每个循环的item一个包裹，可以使用tag属性（Vue3支持片段代码，所以无需根节点，如果仍想要一个包裹可以使用tag）
+* `name`：和Transition一样，定义class的前缀
+
+**Transition-group的过渡css：**
+
+除了Transition原有的过渡class，还新增了一个
+
+* `v-move`：当列表移动时触发此class钩子。可以通过name来自定义前缀
+
+**注意：Transition-group没有mode属性，且内部循环元素必须提供key**
+
+
+
+**基础案例一：**
+
+![Transition-group1](D:\Vicer\link\study-note\Vue3\img\vue3-animate\Transition-group1.gif)
+
+```vue
+<template>
+  <div>
+    <button @click="addNum">添加数字</button>
+    <button @click="removeNum">删除数字</button>
+    <transition-group tag="p">
+      <span v-for="item in numbers" :key="item" class="item">{{ item }}</span>
+    </transition-group>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "App",
+  data() {
+    return {
+      numbers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      numCounter: 10
+    }
+  },
+  methods: {
+    addNum() {
+      // this.numbers.push(this.numCounter++)
+      this.numbers.splice(this.randomIndex(), 0, this.numCounter++)
+    },
+    removeNum() {
+      this.numbers.splice(this.randomIndex(), 1)
+    },
+    randomIndex() {
+      return Math.floor(Math.random() * this.numbers.length)
+    }
+  }
+}
+</script>
+
+<style scoped>
+.item {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.v-enter-from, .v-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.v-enter-active, .v-leave-active {
+  transition: all 1s ease;
+}
+.v-leave-active{  /* 当组件离开时还占据元素位置，需要脱离文档流 */
+  position: absolute;
+}
+
+.v-move{
+  transition: transform 1s ease;
+}
+</style>
+```
+
+**基础案例二：交错动画**
+
+![2](D:\Vicer\link\study-note\Vue3\img\vue3-animate\Transition-group2.gif)
+
+```vue
+<template>
+  <div>
+    <input type="text" v-model="inputVal">
+    <transition-group tag="ul" @before-enter="beforeEnter" @enter="enter" @leave="leave">
+      <li v-for="(item,index) in filterNames" :key="item" :data-index="index">
+        {{ item }}
+      </li>
+    </transition-group>
+  </div>
+</template>
+
+<script>
+import {gsap} from 'gsap'
+
+export default {
+  name: "App",
+  data() {
+    return {
+      inputVal: '',
+      names: ['abc', 'bbb', 'james', 'jack', 'viceroy', 'codewhy']
+    }
+  },
+  computed: {
+    filterNames() {
+      return this.names.filter(item => item.indexOf(this.inputVal) !== -1)
+    }
+  },
+  methods: {
+    beforeEnter(el) {
+      el.style.opacity = 0
+      el.style.height = '0'
+    },
+    enter(el, done) {
+      gsap.to(el, {
+        opacity: 1,
+        height: '1.5em',
+        delay: el.dataset.index * 0.15,
+        onComplete: done
+      })
+    },
+    leave(el, done) {
+      gsap.to(el, {
+        opacity: 0,
+        height: 0,
+        delay: el.dataset.index * 0.15,
+        onComplete: done
+      })
+    }
+  }
+}
+</script>
 ```
 
