@@ -201,3 +201,114 @@ methods:{
 }
 ```
 
+### 混入mixin
+
+关于混入，即重复代码复用，减少代码的重复使用。
+mixin中可以看作类似Vue实例，data/methods/生命周期函数等都可以在mixin中复用
+
+#### 基本使用
+
+1. 导出mixin
+
+   ```js
+   //myMixin.js
+   
+   export let myMixin = {
+     data(){
+   	return{
+   		message:'hello mixin'
+       }
+     },
+     methods:{
+   	testFun(){
+   		console.log(this.message)
+   	}
+     }
+   }
+   ```
+
+2. 在需求页导入
+   `import {myMixin} from "./mixin"`
+
+   ```js
+   new Vue({
+       //mixins和data同级，注意这里有复数s
+       mixins:[myMixin],
+       create:{
+           this.testFun()
+   	}
+   })
+   ```
+
+#### 合并规则
+
+> 当遇到对象中相同的名称或选项时，vue会如何操作
+
+1. 与data函数内对象冲突：以组件自身数据为准
+
+   ```js
+   data(){return{
+       // 相同对象名，以组件自身为准
+   }}
+   ```
+
+2. 生命周期冲突：两个钩子函数会被合并数组，两个函数都会被调用
+
+3. 值为对象的选项，如 methods、components 和 directives，将被合并为同一个对象
+
+   注意：如果对象中key相同，则取对象的键值对（如methods中有相同名称方法，则以组件自身的methods的方法为主）
+
+#### 全局混入
+
+> 如果想要为每一个组件都混入方法，可以使用全局混入
+
+```js
+// main.js
+const app = createApp(App);
+
+app.mixin({
+  created() {
+    console.log("全局的created生命周期");
+  }
+});
+
+app.mount("#app");
+```
+
+### extends
+
+> 允许声明扩展另外一个组件，类似于Mixins，但是不能复用template中的内容
+
+```vue
+// basePage.vue
+<script>
+export default {
+  name: "basePage",
+  data(){
+    return {
+      name:'vicer'
+    }
+  },
+  methods:{
+    changeName(){
+      this.name = 'aaa'
+    }
+  }
+}
+</script>
+```
+
+```vue
+// App.vue
+<script>
+import basePage from "./basePage";
+
+export default {
+  extends: basePage,
+  name: "About"
+}
+</script>
+```
+
+类似mixin，在开发中**extends用的非常少**，在Vue2中比较**推荐大家使用Mixin**，而在Vue3中**推荐使用Composition API**。
+

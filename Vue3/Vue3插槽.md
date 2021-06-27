@@ -15,7 +15,7 @@
 ```vue
 // App.vue
 <template>
-	<slot-comp>
+  <slot-comp>
   	<h2>我是插入的内容</h2>
   </slot-comp>	
 </template>

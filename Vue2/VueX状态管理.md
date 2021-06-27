@@ -184,22 +184,23 @@ actions中一般放异步操作，但如果有逻辑的操作，也可以放在a
 
 方法：  
 1. 创建一个文件: mutation-types.js, 并且在其中定义我们的常量.
-		const ADD = 'add'
 	
-2. 在需要用到的地方import * as全部导出
+	```js
+	const ADD = 'add'
+	```
+	
+2. 在需要用到的地方`import * as`全部导出
 
 3. 在commit时正常使用，但使用mutations时作为函数名需要加一个中括号
 
-		```js
+	```js
 	//commit正常用
-		this.$store.commit(typeName.ADD)
+	this.$store.commit(typeName.ADD)
 	
-		//作为函数名使用需加中括号
-		[typeName.ADD](){
-			this.state.counter++
-		}
-	```
-	
+	//作为函数名使用需加中括号
+	[typeName.ADD](){
+		this.state.counter++
+	}
 	```
 #### mutations同步函数
 
@@ -209,7 +210,6 @@ actions中一般放异步操作，但如果有逻辑的操作，也可以放在a
 如果确实需要异步操作，使用actions
 
 <br>
-	
 
 ### actions异步操作
 
@@ -266,7 +266,6 @@ Actions传递的是上下文context，**和store对象**具有相同的方法和
 ```
 
 <a name='d'></a>
-	
 
 #### actions返回promise
 
@@ -316,7 +315,12 @@ mapActions可以把store中的actions映射到局部计算属性中。
 	import {mapActions} from 'vuex'
 	
 	methods:{
+	  // 数组用法
 	  ...mapActions(['actionInfo'])
+	  // 对象用法
+	  ...mapActions({
+	      actionInfo:'actionInfo'
+	  })
 	}
 	```
 	
@@ -387,27 +391,6 @@ mapActions可以把store中的actions映射到局部计算属性中。
 mapGetters可以把store中的getters映射到局部计算属性中。  
 免去了要从计算属性导入getters的麻烦
 
-**正常使用：**
-
-```html
-<div>
-	{{getName1}}  
-  {{getName2}}
-</div>
-
-//js
-computed:{
-	getName1(){
-		return this.$store.state.gettersName1;
-	},
-  getName2(){
-		return this.$store.state.gettersName1;
-	},
-}
-```
-
-
-
 **使用方法：**
 
 1. 导入mapGetters、
@@ -415,18 +398,17 @@ computed:{
 2. 在computed中使用
 	1. 数组方法
 		
-		```html
+		```vue
 		<div>
 			{{gettersName1}}  
-		  {{gettersName2}}
+			{{gettersName2}}
 		</div>
 		
-		//js
-		
-		computed:{
-		...mapGetters(['gettersName1','gettersName2'])
-		}
-		
+		<script>
+		    computed:{
+		    	...mapGetters(['gettersName1','gettersName2'])
+		    }
+		</script>
 		```
 		
 	2. 对象方法，可自定义名字
@@ -436,7 +418,6 @@ computed:{
 			...mapGetters({gn1:'gettersName1',gn2:'gettersName2'})
 		}
 		```
-		
 		
 
 
@@ -483,6 +464,7 @@ const store = new Vuex.Store({
 `$store.state.a.name`
 
 **注意：**  
+
 * 模块中的mutations、actions、getters使用和调用方法不变
 
 * 使用模块中的actions时，只能提交模块中的mutations。
@@ -502,7 +484,6 @@ const store = new Vuex.Store({
 	    }
 	  }
 	```
-	
 #### 命名空间
 
 在大型项目中会有多个模块，当多个模块时可能会出现命名冲突的问题，这时我们就可以使用命名空间来解决这个问题
@@ -547,11 +528,4 @@ this.$store.commit('moduleA/setModuleA')
 * <a href='#c'>mutations传参技巧第3点</a>
 * <a href='#d'>actions返回promise</a>
 
-
-
-Vuex源码编写
-
-```js
-
-```
 
