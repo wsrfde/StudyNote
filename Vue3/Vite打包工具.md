@@ -1,4 +1,11 @@
-### Vite打包工具
+---
+title: Vite打包工具
+date: '2021-06-07'
+categories:
+ - Vue
+tags:
+ - Vue3
+---
 
 Vite介绍：是一种新型前端构建工具，能够显著提升前端开发体验。
 

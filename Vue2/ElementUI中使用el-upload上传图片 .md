@@ -1,8 +1,13 @@
-### ElementUI中使用el-upload上传图片
+---
+title: ElementUI中使用el-upload上传图片
+date: '2021-05-26'
+categories:
+ - Vue
+tags:
+ - Vue2
+---
 
 > 介绍：这次使用的使用二进制的方法去上传图片
-
-
 
 ![](.\img\Element\el-upload.png)
 

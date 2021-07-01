@@ -1,4 +1,11 @@
-# Vue高级技巧	
+---
+title: Vue高级技巧
+date: '2021-06-10'
+categories:
+ - Vue
+tags:
+ - Vue2
+---
 
 ### 事件总线
 

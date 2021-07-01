@@ -1,4 +1,11 @@
-## JS高阶函数-遍历方法
+---
+title: JS数组中高阶遍历方法
+date: '2021-04-05'
+categories:
+ - Javascript 
+tags:
+ - ES6
+---
 
 ### filter() 
 

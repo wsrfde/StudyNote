@@ -1,4 +1,11 @@
-## Vue3基础笔记
+---
+title: Vue3基础笔记
+date: '2021-06-07'
+categories:
+ - Vue
+tags:
+ - Vue3
+---
 
 > 本笔记是建立在已知Vue2知识点的一个新技术点补充，并非从0开始学习vue，如有vue2的技术点，请查看vue2文档
 

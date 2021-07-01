@@ -1,4 +1,11 @@
-## Vue3过渡&动画
+---
+title: Vue3过渡&动画
+date: '2021-06-07'
+categories:
+ - Vue
+tags:
+ - Vue3
+---
 
 > 没有动画的情况下，整个内容的显示和隐藏会非常的生硬。可以给单元素或者组件实现过渡动画，可以使用 transition 内置组件来完成动画；
 
@@ -503,7 +510,7 @@ export default {
 
 **基础案例一：**
 
-![Transition-group1](D:\Vicer\link\study-note\Vue3\img\vue3-animate\Transition-group1.gif)
+![Transition-group1](.\img\vue3-animate\Transition-group1.gif)
 
 ```vue
 <template>
@@ -566,7 +573,7 @@ export default {
 
 **基础案例二：交错动画**
 
-![2](D:\Vicer\link\study-note\Vue3\img\vue3-animate\Transition-group2.gif)
+![2](.\img\vue3-animate\Transition-group2.gif)
 
 ```vue
 <template>

@@ -1,5 +1,10 @@
-# 依赖追踪算法 #
-&nbsp;
+---
+title: 依赖追踪算法(a更新b自动更新)
+date: '2021-03-17'
+categories:
+ - Javascript
+---
+
 Reactive 本质上在 set Reactive 时去执行更新  
 Computed 本质上在 get Reactive 时标记依赖  
 

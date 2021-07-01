@@ -1,4 +1,11 @@
-## v-model双向绑定
+---
+title: v-model双向绑定
+date: '2021-05-26'
+categories:
+ - Vue
+tags:
+ - Vue2
+---
 
 ### v-model的用法
 

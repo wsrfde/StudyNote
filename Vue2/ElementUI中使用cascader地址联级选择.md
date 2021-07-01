@@ -1,4 +1,11 @@
-### ElementUI中使用cascader地址联级选择
+---
+title: ElementUI中使用cascader地址联级选择
+date: '2021-05-26'
+categories:
+ - Vue
+tags:
+ - Vue2
+---
 
 > 在项目中，要求使用地址联级选择器，本来是一个不太难的需求，从github上找到中国区域数据，进行联级展示即可。但项目中要求地址可以多选，那么难点就出现了
 

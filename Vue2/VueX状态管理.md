@@ -1,4 +1,11 @@
-## VueX状态管理
+---
+title: VueX状态管理
+date: '2021-05-26'
+categories:
+ - Vue
+tags:
+ - Vue2
+---
 
 Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。  
 

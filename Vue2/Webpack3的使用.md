@@ -1,8 +1,13 @@
-# webpack3的使用
+---
+title: Webpack3的使用
+date: '2021-06-05'
+categories:
+ - Vue
+tags:
+ - Vue2
+---
 
-webpack中的代码都是以模块化来进行编写  
-
-
+webpack中的代码都是以模块化来进行编写
 
 ## 和gulp的区别
 

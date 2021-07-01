@@ -1,3 +1,12 @@
+---
+title: ES6数组小技巧
+date: '2021-05-26'
+categories:
+ - Javascript
+tags:
+ - ES6
+---
+
 ### 数组解构赋值应用
 
 ```js

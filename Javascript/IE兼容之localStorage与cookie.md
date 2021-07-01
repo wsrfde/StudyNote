@@ -1,3 +1,10 @@
+---
+title: IE兼容之localStorage与cookie
+date: '2021-03-17'
+categories:
+ - Javascript
+---
+
 ### 页面保存——localStorage与cookie的兼容
 
 > 首先我们来看下cookie的用法

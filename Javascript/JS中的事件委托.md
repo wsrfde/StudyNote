@@ -1,4 +1,9 @@
-### JS中的事件委托
+---
+title: JS中的事件委托
+date: '2021-03-17'
+categories:
+- Javascript
+---
 
 在JS中，事件委托又叫事件代理
 

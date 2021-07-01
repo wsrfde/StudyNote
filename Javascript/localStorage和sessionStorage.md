@@ -1,8 +1,13 @@
+---
+title: localStorage和sessionStorage使用
+date: '2021-03-17'
+categories:
+ - Javascript
+---
+
 ### localStorage和sessionStorage使用
 
 > 示例浏览器Storage使用方法
-
-
 
 **localStorage和sessionStorage使用方法一样**
 

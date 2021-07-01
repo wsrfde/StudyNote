@@ -1,3 +1,12 @@
+---
+title: Vue中父与孙组件的传递
+date: '2021-05-26'
+categories:
+ - Vue
+tags:
+ - Vue2
+---
+
 #### 前言[#](https://www.cnblogs.com/lovecode3000/p/12709231.html#816807762)
 
 多级组件嵌套需要传递数据时，通常使用的方法是通过vuex。如果仅仅是传递数据，而不做中间处理，使用 vuex 处理，未免有点杀鸡用牛刀。Vue 2.4 版本提供了另一种方法:

@@ -1,5 +1,10 @@
-# flex和box自适应布局 #
-&nbsp;
+---
+title: Flex和Box自适应布局
+date: '2021-03-17'
+categories:
+ - 布局及兼容
+---
+
 ## flex中间布局
 display:flex配合flex-wrap:wrap更适合做自适应模型
 做中间布局的话注意在里面加一层div

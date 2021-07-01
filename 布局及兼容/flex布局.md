@@ -1,10 +1,11 @@
-### Flex布局
-
-
+---
+title: Flex布局
+date: '2021-03-17'
+categories:
+ - 布局及兼容
+---
 
 在flex中，没有x和y轴，这里称之为主轴和交叉轴 
-
-
 
 **应用在flex container 上的css属性**
 

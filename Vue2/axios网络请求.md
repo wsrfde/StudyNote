@@ -1,4 +1,11 @@
-## axios网络请求
+---
+title: axios网络请求
+date: '2021-05-26'
+categories:
+ - Vue
+tags:
+ - Vue2
+---
 
 > 淘汰ajax，jquery ajax，选择axios  
 

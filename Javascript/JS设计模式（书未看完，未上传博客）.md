@@ -1,8 +1,13 @@
-## JavaScript设计模式
+---
+title: JavaScript设计模式
+date: '2021-03-17'
+categories:
+ - Javascript
+tags:
+ - 设计模式
+---
 
 > 本笔记为JavaScript设计模式书籍 （张容铭）的总结思考
-
-
 
 ### 函数编写方式
 

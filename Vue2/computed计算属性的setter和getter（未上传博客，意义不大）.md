@@ -1,4 +1,11 @@
-### 计算属性的setter和getter
+---
+title: computed计算属性的setter和getter
+date: '2021-05-26'
+categories:
+ - Vue
+tags:
+ - Vue2
+---
 
 * 大部分情况下用不到set方法。  
 * 只用到get方法，所以这个为只读属性
@@ -46,7 +53,6 @@
 	    }
 	  }
 	```
-	
 	
 	
 	

@@ -1,4 +1,11 @@
-### v-bind动态绑定
+---
+title: v-bind动态绑定
+date: '2021-05-26'
+categories:
+ - Vue
+tags:
+ - Vue2
+---
 
 > **v-bind的基本用法**  
 

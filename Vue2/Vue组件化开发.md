@@ -1,4 +1,11 @@
-#  Vue组件化开发
+---
+title: Vue组件化开发
+date: '2021-06-12'
+categories:
+ - Vue
+tags:
+ - Vue2
+---
 
 **步骤**
 1. Vue.extend创建组件构造器,并传入template自定义我们的模板

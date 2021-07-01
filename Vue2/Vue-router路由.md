@@ -1,4 +1,11 @@
-##  vue router 路由
+---
+title: Vue router路由
+date: '2021-05-26'
+categories:
+ - Vue
+tags:
+ - Vue2
+---
 
 ### 什么是前端渲染，什么是后端渲染
 

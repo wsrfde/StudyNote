@@ -1,3 +1,12 @@
+---
+title: ES6笔记
+date: '2021-05-26'
+categories:
+ - Javascript
+tags:
+ - ES6
+---
+
 ## ES6笔记整理
 
 ### let与const

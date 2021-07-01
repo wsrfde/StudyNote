@@ -1,3 +1,12 @@
+---
+title: Webpack之polyfill踩坑之路
+date: '2021-03-17'
+categories:
+ - Vue
+tags:
+ - Vue2
+---
+
 ## @babel/polyfill的踩坑之路
 
 > 在网页需要向低版本兼容时，如IE不支持promise等新特性，我们仅仅使用babel进行es5转换是不够的，还需要把这些新特性进行转换

@@ -1,3 +1,12 @@
+---
+title: new一个对象后面加括号与不加括号的区别
+date: '2021-03-17'
+categories:
+ - Javascript
+tags:
+ - this
+---
+
 ### this的指向
 
 > `this` 的值是在代码运行时计算出来的，它取决于代码上下文。

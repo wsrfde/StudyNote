@@ -1,3 +1,10 @@
+---
+title: 新增column属性及瀑布流布局
+date: '2021-03-17'
+categories:
+ - 布局及兼容
+---
+
 ### column列布局
 
 > 新增的column属性用来进行多列布局。注意新增属性需要些兼容前缀，如-moz-和-webkit- ，最大兼容到IE10

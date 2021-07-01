@@ -1,14 +1,13 @@
-### 布局中常用的单位，比如px、%、rem和vw等在响应式布局中的优缺点。
+---
+title: Css百分比、rem、vwvh对比
+date: '2021-03-17'
+categories:
+ - 布局及兼容
+---
 
-
-
-> 这里是看文章后总结的一些点，具体可查看<a href="https://www.jianshu.com/p/ba26509bc5b3">原文</a>
-
-
+> 布局中常用的单位，比如px、%、rem和vw等在响应式布局中的优缺点。这里是看文章后总结的一些点，具体可查看<a href="https://www.jianshu.com/p/ba26509bc5b3">原文</a>
 
 首先我们要知道什么是像素：
-
-
 
 **css像素**：为web开发者提供，在css中使用的一个抽象单位
 

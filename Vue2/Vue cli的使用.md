@@ -1,4 +1,11 @@
-## Vue CLI的使用
+---
+title: Vue CLI的使用
+date: '2021-05-26'
+categories:
+ - Vue
+tags:
+ - Vue2
+---
 
 ### 安装Vue脚手架
 

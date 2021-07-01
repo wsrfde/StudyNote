@@ -1,4 +1,11 @@
-## Vue3组件化
+---
+title: Vue3组件化
+date: '2021-06-07'
+categories:
+ - Vue
+tags:
+ - Vue3
+---
 
 > 全局组件和局部组件与Vue2相同，这里只记录Vue3特有的方法
 
