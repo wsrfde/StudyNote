@@ -153,18 +153,15 @@ export default {
     let obj = {   // obj.count.value += 1
       count
     }
-    let newObj = ref({  // newObj.value.count += 1
+    let newObj = ref({  
+      count							// newObj.value.count += 1
       //count:100       // newObj.value.count += 1  :包含非ref变量，使用方式一样
-      count
     })
     let status = reactive({ // status.count += 1
       count
     })
     let changCount = () => {
-	  // count.value += 1
-      // obj.count.value += 1
-      // newObj.value.count += 1
-      // status.count += 1
+			// 对上面的变量进行+1，具体方法看对应变量后面的注释
     }
     return {
        count,

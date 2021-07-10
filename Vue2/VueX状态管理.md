@@ -1,5 +1,5 @@
 ---
-title: VueX状态管理
+  title: VueX状态管理
 date: '2021-05-26'
 categories:
  - Vue
@@ -425,7 +425,6 @@ mapGetters可以把store中的getters映射到局部计算属性中。
 			...mapGetters({gn1:'gettersName1',gn2:'gettersName2'})
 		}
 		```
-		
 
 
 
@@ -534,5 +533,4 @@ this.$store.commit('moduleA/setModuleA')
 > * <a href='#b'>getters传参技巧第3点</a>  
 * <a href='#c'>mutations传参技巧第3点</a>
 * <a href='#d'>actions返回promise</a>
-
 
